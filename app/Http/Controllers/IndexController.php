@@ -114,7 +114,7 @@ class IndexController extends Controller {
 
 		if(!empty($product_detail)){
 			$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
-			$product_khac = DB::table('products')->select()->where('status',1)->where('alias','<>',$id)->orderby('stt','asc')->take(3)->get();
+			$product_khac = DB::table('products')->select()->where('status',1)->where('alias','<>',$id)->orderby('stt','desc')->take(8)->get();
 			$album_hinh = DB::table('images')->select()->where('product_id',$product_detail->id)->orderby('id','asc')->get();
 			$setting = Cache::get('setting');
 			// Cấu hình SEO

@@ -6,10 +6,10 @@
     <section class="breadcrumbs">
         <div class="container">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+              <li class="breadcrumb-item"><a href="{{url('')}}">Trang chủ</a></li>
               <li class="breadcrumb-item"><a href="#"> Sản phẩm</a></li>
               <li class="breadcrumb-item"><a href="#"> Sen đá</a></li>
-              <li class="breadcrumb-item"><a href="#"> Sen hồng phấn</a></li>
+              <li class="breadcrumb-item"><a href="#"> {{$product_detail->name}}</a></li>
             </ol>
         </div>
     </section>
@@ -42,7 +42,7 @@
                         <div class="actions">
                             <div class="action-number">
                                 <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                <input type="number"  value="1" min="1" name="soluong" id="soluong" class="qty" placeholder="">
+                                <input type="text"  value="1" min="1" name="soluong" id="soluong" class="qty" placeholder="">
                                 <span class="fa fa-plus add" aria-hidden="true"></span>
                             </div>
                             <a href="{{url('cart/'.$product_detail->id.'/'.$product_detail->alias.'.html')}}" class="btn btn-viewall">Thêm vào giỏ hàng</a>
@@ -60,35 +60,15 @@
         <div class="container">
             
             <div class="owl-carousel product-slider">
+                @foreach($product_khac as $p)
                 <div class="product-items">
                     <div class="product-item text-center">
-                        <a href="product-detail.html" class="products-img">
-                            <img src="images/pro-1.png" alt="" title="">
+                        <a href="{{url('san-pham/'.$p->alias.'.html')}}" class="products-img">
+                            <img src="{{asset('upload/product/'.$p->photo)}}" alt="" title="">
                         </a>
                     </div>
                 </div>
-                <div class="product-items">
-                    <div class="product-item text-center">
-                        <a href="product-detail.html" class="products-img">
-                            <img src="images/pro-2.png" alt="" title="">
-                        </a>
-                    </div>
-                </div>
-                <div class="product-items">
-                    <div class="product-item text-center">
-                        <a href="product-detail.html" class="products-img">
-                            <img src="images/pro-3.png" alt="" title="">
-                        </a>
-
-                    </div>
-                </div>
-                <div class="product-items">
-                    <div class="product-item text-center">
-                        <a href="product-detail.html" class="products-img">
-                            <img src="images/pro-4.png" alt="" title="">
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
         
