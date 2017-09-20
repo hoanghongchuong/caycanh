@@ -42,7 +42,7 @@
                         <div class="actions">
                             <div class="action-number">
                                 <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                <input type="text"  min="1" name="qty" id="qty" class="qty" placeholder="">
+                                <input type="number"  value="1" min="1" name="soluong" id="soluong" class="qty" placeholder="">
                                 <span class="fa fa-plus add" aria-hidden="true"></span>
                             </div>
                             <a href="{{url('cart/'.$product_detail->id.'/'.$product_detail->alias.'.html')}}" class="btn btn-viewall">Thêm vào giỏ hàng</a>

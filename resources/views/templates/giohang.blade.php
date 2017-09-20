@@ -16,7 +16,8 @@
                                 <th>Giá</th>
                             </tr>
                         </thead>
-                        <form action="">
+                        <form action="{{ route('cart.update') }}" method="post">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                             @foreach($cart as $key=>$item)
                             <tbody>
                                 <tr>
@@ -32,7 +33,7 @@
                                     <td>
                                         <div class="action-number">
                                             <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                            <input type="text" value="{{$item->qty}}" class="qty">
+                                            <input type="number" value="{{$item->qty}}" id="{{ $item->rowId }}"  name="soluong" class="qty">
                                             <span class="fa fa-plus add" aria-hidden="true"></span>
                                         </div>
                                     </td>
@@ -40,53 +41,15 @@
                                 </tr>
                             </tbody>
                             @endforeach
+                             <tr><td><button type="submit">Cap nhat</button></td></tr>
                         </form>
-                        <!-- <tbody>
-                            <tr>
-                                <td>Xóa</td>
-                                <td>2</td>
-                                <td>Style 0327</td>
-                                <td class="details-product">
-                                    <div class="pro-details">
-                                        <a href="product-detail.html" title=""><img src="images/cart-2.png" alt="" title=""></a>
-                                        <h2><a href="product-detail.html" title="">Sleeve Shirt</a></h2>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="action-number">
-                                        <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                        <input type="text" value="1" class="qty">
-                                        <span class="fa fa-plus add" aria-hidden="true"></span>
-                                    </div>
-                                </td>
-                                <td class="sub-total"><span class="price-container price">$ 1,300.00</span></td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr>
-                                <td>Xóa</td>
-                                <td>3</td>
-                                <td>Style 0327</td>
-                                <td class="details-product">
-                                    <div class="pro-details">
-                                        <a href="product-detail.html" title=""><img src="images/cart-3.png" alt="" title=""></a>
-                                        <h2><a href="product-detail.html" title="">Sleeve Shirt</a></h2>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="action-number">
-                                        <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                        <input type="text" value="1" class="qty">
-                                        <span class="fa fa-plus add" aria-hidden="true"></span>
-                                    </div>
-                                </td>
-                                <td class="sub-total"><span class="price-container price">$ 1,300.00</span></td>
-                            </tr>
-                        </tbody> -->
+                        
                         <tfoot>
+
                             <tr>
                                 <th class="text-right" colspan="5">Tạm tính </th>
-                                <td class="grand-total price">$ 3,900.00</td>
+
+                                <td class="grand-total price">$ {{$total}}</td>
                             </tr>
                         </tfoot>
                     </table>

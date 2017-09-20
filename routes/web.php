@@ -24,9 +24,11 @@ Route::post('newsletter',['as'=>'postNewsletter', 'uses'=>'IndexController@postN
 Route::get('cam-nang/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsDetail']);
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');
+
 Route::get('gio-hang','IndexController@giohang')->name('giohang');
 Route::get('xoa-gio-hang/{id}','IndexController@deleteCart');
 Route::get('cart/{id}/{alias}.html','IndexController@cart')->name('cart');
+Route::post('cart-update',['as'=>'cart.update', 'uses'=>'IndexController@UpdateCart']);
 // Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@getProductList']);
 
 Route::get('dich-vu',['as'=>'getDichvu', 'uses'=>'IndexController@getDichvu']);

@@ -443,10 +443,10 @@ class IndexController extends Controller {
 	}
 
 	
-	public function cart(Request $req, $id){
+	public function cart(Request $request, $id){
 		$products_buy = DB::table('products')->where('id',$id)->first();
-		$sl = $req->input('qty');
-		// dd($sl);
+		$sl = $request->input('soluong');
+		dd($sl);
         Cart::add(array(
 	        'id'=>$id, 
 	        'name'=>$products_buy->name, 
@@ -463,11 +463,23 @@ class IndexController extends Controller {
     );
         $content = Cart::content();
         return redirect()->route('giohang');
-		
+	}
+
+	public function UpdateCart(Request $request){
+		$inputs = $request->input('soluong');
+		// dd($inputs);
+		if ($inputs) {
+			foreach($inputs as $key => $val){
+				Cart::update($key, $val);
+			}
+		}
+		return redirect()->back();
 	}
 	public function giohang(){
 		$cart = Cart::content();
-        return view('templates.giohang',compact('cart'));
+		// dd($cart);
+		$total = Cart::total();
+        return view('templates.giohang',compact('cart','total'));
 	}
 	public function deleteCart($id){
         Cart::remove($id);
