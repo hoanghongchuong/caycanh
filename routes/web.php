@@ -21,7 +21,7 @@ Route::post('lien-he',['as'=>'postContact', 'uses'=>'ContactController@postConta
 Route::get('cam-nang',['as'=>'getNews', 'uses'=>'IndexController@getNews']);
 Route::get('tim-kiem',['as'=>'search', 'uses'=>'IndexController@search']);
 Route::post('newsletter',['as'=>'postNewsletter', 'uses'=>'IndexController@postNewsletter']);
-Route::get('tin-tuc/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsDetail']);
+Route::get('cam-nang/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsDetail']);
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');
 Route::get('gio-hang','IndexController@giohang')->name('giohang');
@@ -120,7 +120,33 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 	// 	Route::get('{id}/delete_list',['as'=>'admin.menu.getDeleteList','uses'=>'Admin\MenuController@getDeleteList']);
 	// });
 
+	Route::group(['prefix'=>'position'], function(){
+		Route::get('/',['as'=>'admin.position.index','uses'=>'Admin\PositionController@getList']);
+		Route::get('add',['as'=>'admin.position.getAdd','uses'=>'Admin\PositionController@getAdd']);
+		Route::post('add',['as'=>'admin.position.postAdd','uses'=>'Admin\PositionController@postAdd']);
 
+		Route::get('edit/{id}',['as'=>'admin.position.getEdit','uses'=>'Admin\PositionController@getEdit']);
+		Route::post('edit/{id}',['as'=>'admin.position.update','uses'=>'Admin\PositionController@update']);
+
+		Route::get('delete/{id}',['as'=>'admin.position.getDelete','uses'=>'Admin\PositionController@getDelete']);
+		
+		Route::get('deleteList/{id}',['as'=>'admin.position.getDeleteList','uses'=>'Admin\PositionController@getDeleteList']);
+
+	});
+
+	Route::group(['prefix'=>'banner'], function(){
+		Route::get('/',['as'=>'admin.banner.index','uses'=>'Admin\BannerController@getList']);
+		Route::get('add',['as'=>'admin.banner.getAdd','uses'=>'Admin\BannerController@getAdd']);
+		Route::post('add',['as'=>'admin.banner.postAdd','uses'=>'Admin\BannerController@postAdd']);
+
+		Route::get('edit/{id}',['as'=>'admin.banner.getEdit','uses'=>'Admin\BannerController@getEdit']);
+		Route::post('edit/{id}',['as'=>'admin.banner.update','uses'=>'Admin\BannerController@update']);
+
+		Route::get('delete/{id}',['as'=>'admin.banner.getDelete','uses'=>'Admin\BannerController@getDelete']);
+		
+		Route::get('deleteList/{id}',['as'=>'admin.banner.getDeleteList','uses'=>'Admin\BannerController@getDeleteList']);
+
+	});
 	Route::group(['prefix' => 'news'], function(){
 		Route::get('/',['as'=>'admin.news.index','uses'=>'Admin\NewsController@getList']);
 		Route::get('add',['as'=>'admin.news.getAdd','uses'=>'Admin\NewsController@getAdd']);

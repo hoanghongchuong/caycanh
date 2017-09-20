@@ -16,32 +16,31 @@
                                 <th>Giá</th>
                             </tr>
                         </thead>
-                       
-                        @foreach($cart as $key=>$item)
-                        
-                        <tbody>
-                            <tr>
-                                <td><a  id="{{$item->rowId}}" href="{{url('xoa-gio-hang/'.$item->rowId)}}">Xóa</a></td>
-                                <td>1</td>
-                                <td>{{$item->code}}</td>
-                                <td class="details-product">
-                                    <div class="pro-details">
-                                        <a href="product-detail.html" title=""><img src="images/cart-1.png" alt="" title=""></a>
-                                        <h2><a href="product-detail.html" title="">{{$item->name}}</a></h2>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="action-number">
-                                        <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                        <input type="text" value="1" class="qty">
-                                        <span class="fa fa-plus add" aria-hidden="true"></span>
-                                    </div>
-                                </td>
-                                <td class="sub-total"><span class="price-container price">$ {{$item->price}}</span></td>
-                            </tr>
-                        </tbody>
-                        
-                        @endforeach
+                        <form action="">
+                            @foreach($cart as $key=>$item)
+                            <tbody>
+                                <tr>
+                                    <td><a  id="{{$item->rowId}}" href="{{url('xoa-gio-hang/'.$item->rowId)}}">Xóa</a></td>
+                                    <td>1</td>
+                                    <td>{{$item->options->code}}</td>
+                                    <td class="details-product">
+                                        <div class="pro-details">
+                                            <a href="product-detail.html" title=""><img src="images/cart-1.png" alt="" title=""></a>
+                                            <h2><a href="product-detail.html" title="">{{$item->name}}</a></h2>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="action-number">
+                                            <span class="fa fa-minus minus" aria-hidden="true"></span>
+                                            <input type="text" value="{{$item->qty}}" class="qty">
+                                            <span class="fa fa-plus add" aria-hidden="true"></span>
+                                        </div>
+                                    </td>
+                                    <td class="sub-total"><span class="price-container price">$ {{ number_format($item->price) }}</span></td>
+                                </tr>
+                            </tbody>
+                            @endforeach
+                        </form>
                         <!-- <tbody>
                             <tr>
                                 <td>Xóa</td>

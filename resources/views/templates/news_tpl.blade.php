@@ -22,11 +22,11 @@
                         @foreach($tintuc as $item)    
                             <div class="col-md-6 handbook--main">
                                 <div class="handbook-item text-center">
-                                    <a href="{{url('tin-tuc/'.$item->alias.'.html')}}" title="">
+                                    <a href="{{url('cam-nang/'.$item->alias.'.html')}}" title="">
                                         <img src="{{asset('upload/news/'.$item->photo)}}" alt="" title="">
                                     </a>
                                     <h3 class="hanbook-title">
-                                        <a href="{{url('tin-tuc/'.$item->alias.'.html')}}" title="">{{$item->name}}</a>
+                                        <a href="{{url('cam-nang/'.$item->alias.'.html')}}" title="">{{$item->name}}</a>
                                     </h3>
                                     
                                 </div>

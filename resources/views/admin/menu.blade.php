@@ -172,6 +172,8 @@
             <li><a href="admin/about/edit?type=footer"><i class="fa fa-gear" aria-hidden="true"></i> Quản lý footer</a></li>
           </ul>
         </li> -->
+        <li><a href="admin/position"><i class="fa fa-gear" aria-hidden="true"></i> <span>Vị trí quảng cáo</span></a></li>
+        <li><a href="admin/banner"><i class="fa fa-gear" aria-hidden="true"></i> <span>Quản lý quảng cáo</span></a></li>
       </ul>
     </section>
 </aside>

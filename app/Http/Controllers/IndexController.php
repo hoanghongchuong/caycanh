@@ -52,8 +52,7 @@ class IndexController extends Controller {
 		$hot_news = DB::table('news')->where('status',1)->where('noibat',1)->orderBy('created_at','desc')->first();
 		// dd($hot_news);
 		$news_product = DB::table('products')->select()->where('status',1)->orderBy('id','desc')->limit(8)->get();
-		
-		$about_dichvu = DB::table('about')->select()->where('com','dich-vu')->get()->first();
+		$about = DB::table('about')->first();
 		// Cấu hình SEO
 		$setting = Cache::get('setting');
 		
@@ -63,7 +62,7 @@ class IndexController extends Controller {
 		// End cấu hình SEO
 		$img_share = asset('upload/hinhanh/'.$setting->photo);
 
-		return view('templates.index_tpl', compact('banner_danhmuc','com','khonggian_list','about_dichvu','tintuc_moinhat','keyword','description','title','img_share','hot_news','news_product'));
+		return view('templates.index_tpl', compact('banner_danhmuc','com','khonggian_list','about','tintuc_moinhat','keyword','description','title','img_share','hot_news','news_product'));
 	}
 	public function getProduct()
 	{
@@ -444,11 +443,25 @@ class IndexController extends Controller {
 	}
 
 	
-	public function cart($id){
+	public function cart(Request $req, $id){
 		$products_buy = DB::table('products')->where('id',$id)->first();
-        Cart::add(array('id'=>$id, 'name'=>$products_buy->name, 'qty'=>1, 'price'=>$products_buy->price, 'options'=>array('images'=>$products_buy->photo)));
+		$sl = $req->input('qty');
+		// dd($sl);
+        Cart::add(array(
+	        'id'=>$id, 
+	        'name'=>$products_buy->name, 
+	        'code'=>$products_buy->code,
+	        'qty'=>$sl ? $sl : 1,
+	        'price'=>$products_buy->price,
+	        'options'	=> [
+							'alias'		=> $products_buy->alias,
+							'cate_id'	=> $products_buy->cate_id,
+							'photo'		=> $products_buy->photo,
+							'code' => $products_buy->code
+						]
+	    )
+    );
         $content = Cart::content();
-        // print_r(($content));
         return redirect()->route('giohang');
 		
 	}
