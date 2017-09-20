@@ -40,9 +40,16 @@ class BannerController extends Controller
     	return view('admin.banner.edit', compact('data','position'));
     }
     public function update(Request $req, $id){
-    	$data = Position::find($id);
-
+    	$data = Banner::find($id);
+    	$img = $req->file('fImages');
+        $path_img='upload/banner';
+        $img_name='';
+        if(!empty($img)){
+            $img_name=time().'_'.$img->getClientOriginalName();
+            $img->move($path_img,$img_name);
+        }
     	$data->link = $req->txtLink;
+    	$data->image = $img_name;
     	$data->position = $req->position;
     	$data->save();
     	return redirect()->route('admin.banner.index');
