@@ -66,11 +66,14 @@ class IndexController extends Controller {
 	}
 	public function getProduct()
 	{
+		$cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','desc')->get();
 		$product = DB::table('products')->select()->where('status',1)->orderby('stt','desc')->paginate(6);
+		// dd($product_cate);
 		// $banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
 		// $camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->orderby('stt','asc')->get();
 		// $doitac = DB::table('lienket')->select()->where('status',1)->where('com','doi-tac')->orderby('stt','asc')->get();
 		$setting = Cache::get('setting');
+		$com='san-pham';
 		
 			$title = "Sản phẩm";
 			$keyword = "Sản phẩm";
@@ -78,8 +81,9 @@ class IndexController extends Controller {
 		// $img_share = asset('upload/hinhanh/'.$banner_danhmuc->photo);
 		
 		// return view('templates.product_tpl', compact('product','banner_danhmuc','doitac','camnhan_khachhang','keyword','description','title','img_share'));
-			return view('templates.product_tpl', compact('title','keyword','description','product'));
+			return view('templates.product_tpl', compact('title','keyword','description','product', 'com','cate_pro'));
 	}
+
 	public function getProductList($id)
 	{
 		//Tìm article thông qua mã id tương ứng
@@ -443,44 +447,91 @@ class IndexController extends Controller {
 	}
 
 	
-	public function cart(Request $request, $id){
-		$products_buy = DB::table('products')->where('id',$id)->first();
-		$sl = $request->input('soluong');
-		dd($sl);
-        Cart::add(array(
-	        'id'=>$id, 
-	        'name'=>$products_buy->name, 
-	        'code'=>$products_buy->code,
-	        'qty'=>$sl ? $sl : 1,
-	        'price'=>$products_buy->price,
-	        'options'	=> [
-							'alias'		=> $products_buy->alias,
-							'cate_id'	=> $products_buy->cate_id,
-							'photo'		=> $products_buy->photo,
-							'code' => $products_buy->code
-						]
-	    )
-    );
-        $content = Cart::content();
-        return redirect()->route('giohang');
+	// public function giohang(){
+	// 	$cart = Cart::content();
+		
+	// 	$total = Cart::total();
+ //        return view('templates.giohang',compact('cart','total'));
+	// }
+	// public function cart(Request $request, $id){
+	// 	$products_buy = DB::table('products')->where('id',$id)->first();
+
+	// 	$sl = $request->get('qtt');
+	
+ //        Cart::add(array(
+	//         'id'=>$id, 
+	//         'name'=>$products_buy->name, 
+	//         'code'=>$products_buy->code,
+	//         'qty'=>$sl ? $sl : 1,
+	//         'price'=>$products_buy->price,
+	//         'options'	=> [
+	// 						'alias'		=> $products_buy->alias,
+	// 						'cate_id'	=> $products_buy->cate_id,
+	// 						'photo'		=> $products_buy->photo,
+	// 						'code' => $products_buy->code
+	// 					]
+	// 	    )
+	//     );
+ //        $content = Cart::content();
+ //        return redirect()->route('giohang');
+	// }
+
+	// public function UpdateCart(Request $request){
+	// 	$inputs = $request->input('soluong');
+		
+	// 	if ($inputs) {
+	// 		foreach($inputs as $key => $val){
+	// 			Cart::update($key, $val);
+	// 		}
+	// 	}
+	// 	return redirect()->back();
+	// }
+	
+
+	public function getCart()
+	{
+		//$product_cart= Session::get('cart');
+		$product_cart= Cart::content();
+		$product_noibat = DB::table('products')->select()->where('status',1)->where('noibat','>',0)->orderBy('created_at','desc')->take(8)->get();
+		
+		// $huongdan_muahang = DB::table('about')->select()->where('com','huong-dan')->first();
+		// $camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->orderby('stt','asc')->get();
+		$setting = Cache::get('setting');
+		// Cấu hình SEO
+		$title = "Giỏ hàng";
+		$keyword = "Giỏ hàng";
+		$description = "Giỏ hàng";
+		$img_share = '';
+		// End cấu hình SEO
+		return view('templates.giohang_tpl', compact('doitac','product_cart','huongdan_muahang','product_noibat','camnhan_khachhang','keyword','description','title','img_share','total'));
 	}
 
-	public function UpdateCart(Request $request){
-		$inputs = $request->input('soluong');
-		// dd($inputs);
-		if ($inputs) {
-			foreach($inputs as $key => $val){
-				Cart::update($key, $val);
-			}
+	public function addCart(Request $req)
+	{
+		$data = $req->only('product_id', 'product_numb');
+		$product = DB::table('products')->select()->where('status',1)->where('id',$data['product_id'])->first();
+		if (!$product) {
+			die('product not found');
 		}
-		return redirect()->back();
+		
+		Cart::add(array(
+				'id'=>$product->id,
+				'name'=>$product->name,
+				'qty'=>$data['product_numb'],
+				'price'=>$product->price,
+				'options'=>array('photo'=>$product->photo,'code'=>$product->code)));
+
+		return redirect(route('getCart'));
 	}
-	public function giohang(){
-		$cart = Cart::content();
-		// dd($cart);
-		$total = Cart::total();
-        return view('templates.giohang',compact('cart','total'));
+
+	public function updateCart(Request $req){
+		$data = $req->numb;
+		foreach($data as $key=>$item){
+			Cart::update($key, $item);
+		}		
+		return redirect(route('getCart'));
 	}
+
 	public function deleteCart($id){
         Cart::remove($id);
         return redirect('gio-hang');

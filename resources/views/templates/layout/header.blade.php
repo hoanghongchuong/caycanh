@@ -14,7 +14,7 @@
                 <ul class="list-inline">
                   <li class="list-inline-item @if(!empty($com) && $com=='index') active @endif"><a href="{{url('')}}" class="" title="Trang chủ">Trang chủ </a></li>
                   <li class="list-inline-item @if(!empty($com) && $com=='gioi-thieu') active @endif"><a href="{{url('gioi-thieu')}}" title="Giới thiệu">Giới thiệu</a></li>
-                  <li class="list-inline-item "><a href="{{url('san-pham')}}" title="Shop">Shop</a></li>
+                  <li class="list-inline-item @if(!empty($com) && $com=='san-pham') active @endif "><a href="{{url('san-pham')}}" title="Shop">Shop</a></li>
                   <li class="list-inline-item @if(!empty($com) && $com=='tin-tuc') active @endif"><a href=" {{url('cam-nang')}}" title="Cẩm nang">Cẩm nang</a></li>
                   <li class="list-inline-item @if(!empty($com) && $com=='lien-he') active @endif"><a href="{{url('lien-he')}}" title="Liên hệ">Liên hệ</a></li>                            
                 </ul>

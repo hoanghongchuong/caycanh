@@ -25,11 +25,16 @@ Route::get('cam-nang/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');
 
-Route::get('gio-hang','IndexController@giohang')->name('giohang');
-Route::get('xoa-gio-hang/{id}','IndexController@deleteCart');
-Route::get('cart/{id}/{alias}.html','IndexController@cart')->name('cart');
-Route::post('cart-update',['as'=>'cart.update', 'uses'=>'IndexController@UpdateCart']);
+
 // Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@getProductList']);
+
+// gio hang
+Route::get('gio-hang',['as'=>'getCart', 'uses'=>'IndexController@getCart']);
+Route::post('cart/add', ['as' => 'addProductToCart', 'uses' => 'IndexController@addCart']);
+Route::post('cart/update',['as' => 'updateCart', 'uses' => 'IndexController@updateCart']);
+Route::get('updatecart/{id}/{qty}',['as'=>'updatecart','uses'=>'IndexController@updatecart']);
+Route::get('xoa-gio-hang/{id}','IndexController@deleteCart');
+
 
 Route::get('dich-vu',['as'=>'getDichvu', 'uses'=>'IndexController@getDichvu']);
 
@@ -50,6 +55,8 @@ Route::get('error/404.html',['as'=>'getErrorNotFount', 'uses'=>'IndexController@
 // 	'password' => 'Auth\PasswordController',
 // ]);
 
+
+
 Route::get('admin/login',['as'=>'admin.auth.getLogin', 'uses'=>'AdminAuth\AuthController@getLogin']);
 Route::post('admin/postlogin',['as'=>'admin.auth.postLogin', 'uses'=>'AdminAuth\AuthController@postLogin']);
 
@@ -69,6 +76,12 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 		Route::get('info',['as'=>'admin.users.getAdmin','uses'=>'Admin\UsersController@getAdmin']);
 		Route::post('updateinfo',['as'=>'admin.users.updateinfo','uses'=>'Admin\UsersController@updateinfo']);
 	});
+
+	Route::get('campaign', ['as' => 'campaignIndex', 'uses' => 'Admin\CampaignController@index']);
+	Route::any('campaign/create/{id?}', ['as' => 'campaignCreate', 'uses' => 'Admin\CampaignController@create']);
+	Route::get('campaign/delete/{id}', ['as' => 'campaignDelete', 'uses' => 'Admin\CampaignController@delete']);
+
+
 	Route::group(['prefix' => 'productcate'], function(){
 		Route::get('/',['as'=>'admin.productcate.index','uses'=>'Admin\ProductCateController@getDanhSach']);
 		Route::get('add',['as'=>'admin.productcate.getAdd','uses'=>'Admin\ProductCateController@getAdd']);
@@ -97,6 +110,20 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 		Route::get('dropzoneStore',['as'=>'admin.product.dropzoneStore','uses'=>'Admin\ProductController@dropzoneStore']);
 		Route::get('upload',['as'=>'admin.product.upload','uses'=>'Admin\ProductController@post_upload']);
 	});
+
+	Route::group(['prefix' => 'orders'], function(){
+		Route::get('/',['as'=>'admin.order.index','uses'=>'Admin\OrderController@getList']);
+		Route::get('add',['as'=>'admin.orders.getAdd','uses'=>'Admin\OrdersController@getAdd']);
+		Route::post('postAdd',['as'=>'admin.orders.postAdd','uses'=>'Admin\OrdersController@postAdd']);
+
+		Route::get('edit',['as'=>'admin.orders.getEdit','uses'=>'Admin\OrdersController@getEdit']);
+
+		Route::post('edit',['as'=>'admin.orders.update','uses'=>'Admin\OrdersController@update']);
+
+		Route::get('{id}/delete',['as'=>'admin.orders.getDelete','uses'=>'Admin\OrdersController@getDelete']);
+		Route::get('{id}/delete_list',['as'=>'admin.orders.getDeleteList','uses'=>'Admin\OrdersController@getDeleteList']);
+	});
+	
 	Route::group(['prefix' => 'newscate'], function(){
 		Route::get('/',['as'=>'admin.newscate.index','uses'=>'Admin\NewsCateController@getDanhSach']);
 		Route::get('add',['as'=>'admin.newscate.getAdd','uses'=>'Admin\NewsCateController@getAdd']);

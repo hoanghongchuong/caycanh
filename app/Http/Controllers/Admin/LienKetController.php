@@ -165,7 +165,6 @@ class LienKetController extends Controller
                 }
             }
             $news->name = $request->txtName;
-            
             $news->link = $request->txtLink;
             $news->mota = $request->txtDesc;
             $news->content = $request->txtContent;

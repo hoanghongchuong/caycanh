@@ -1,10 +1,29 @@
 @extends('index')
 @section('content')
+<script type="text/javascript">
+
+    function updatecart(id,kieu,qty){
+        var qty = parseInt($('#qty'+id).val());
+        if(kieu=='minus'){
+            if(qty==1){
+                alert('Bạn không thể chọn số lượng thấp hơn 1. Mời bạn chọn lại');
+                qty=1
+            }else{
+                qty-=1;
+            }
+        }else if(kieu=='add'){
+            qty+=1;
+            
+        }
+        this.document.location.href = "updatecart/"+id+"/"+qty;
+    }
+</script>
 <div class="cart-index-index">
     <div class="main-content">
             <section class="cart-container">
                 <div class="container">
                     <h2 class="cart-title">Giỏ hàng</h2>
+                     <form action="{{route('updateCart')}}" method="post">
                     <table class="table table-wrapper table-responsive text-center">
                         <thead>
                             <tr>
@@ -16,13 +35,19 @@
                                 <th>Giá</th>
                             </tr>
                         </thead>
-                        <form action="{{ route('cart.update') }}" method="post">
+                        <form action="{{route('updateCart')}}" method="post">
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            @foreach($cart as $key=>$item)
+                            <?php $tongtien=0; $stt =1 ?>
+                            @foreach($product_cart as $key=>$item)
+                            <?php
+                                $tongtien+=$item->price*$item->qty;
+                            ?>
+
                             <tbody>
+                                <input type="hidden" name="product_id" value="{{ $item->rowId }}">
                                 <tr>
                                     <td><a  id="{{$item->rowId}}" href="{{url('xoa-gio-hang/'.$item->rowId)}}">Xóa</a></td>
-                                    <td>1</td>
+                                    <td>{{$stt}}</td>
                                     <td>{{$item->options->code}}</td>
                                     <td class="details-product">
                                         <div class="pro-details">
@@ -33,26 +58,30 @@
                                     <td>
                                         <div class="action-number">
                                             <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                            <input type="number" value="{{$item->qty}}" id="{{ $item->rowId }}"  name="soluong" class="qty">
+                                            <input type="number" value="{{$item->qty}}" id="{{ $item->rowId }}"  name="numb[{{$key}}]" class="qty">
                                             <span class="fa fa-plus add" aria-hidden="true"></span>
                                         </div>
                                     </td>
                                     <td class="sub-total"><span class="price-container price">$ {{ number_format($item->price) }}</span></td>
                                 </tr>
                             </tbody>
+                            <?php $stt++ ?>
                             @endforeach
-                             <tr><td><button type="submit">Cap nhat</button></td></tr>
-                        </form>
+                            
+                       
                         
                         <tfoot>
 
                             <tr>
                                 <th class="text-right" colspan="5">Tạm tính </th>
 
-                                <td class="grand-total price">$ {{$total}}</td>
+                                <td class="grand-total price">$ {{ number_format($tongtien)}}</td>
                             </tr>
                         </tfoot>
+                        
                     </table>
+                    <div class="pull-right"> <button type="submit" id="btn-update-cart">Cập nhật</button></div>
+                    </form>
                 </div>
             </section>
             <section class="payment">
@@ -67,16 +96,16 @@
                                 <form class="form-info">
                                     <fieldset class="fieldset">
                                         <div class="field name">
-                                            <input type="text" name="" placeholder="Học và tên">
+                                            <input type="text" name="txtName" placeholder="Học và tên">
                                         </div>
                                         <div class="field email">
-                                            <input type="text" name="" placeholder="Email">
+                                            <input type="text" name="txtEmail" placeholder="Email">
                                         </div>
                                          <div class="field phonenumber">
-                                            <input type="text" name="" placeholder="Số điện thoại">
+                                            <input type="text" name="txtPhone" placeholder="Số điện thoại">
                                         </div>
                                         <div class="field field-address">
-                                            <input type="text" name="" placeholder="Địa chỉ">
+                                            <input type="text" name="txtAddress" placeholder="Địa chỉ">
                                         </div>
                                         <div class="field country">
                                             <select>
@@ -106,7 +135,7 @@
                                         <tbody>
                                             <tr>
                                                 <th>Tạm tính</th>
-                                                <td><span class="price">$ 3,900.00</span></td>
+                                                <td><span class="price">$ {{number_format($tongtien)}}</span></td>
                                             </tr>
                                             <tr>
                                                 <th>Phí vận chuyển</th>
@@ -114,7 +143,7 @@
                                             </tr>
                                             <tr class="total">
                                                 <th>Tổng cộng</th>
-                                                <td><span class="price">$ 3,900.00</span></td>
+                                                <td><span class="price">$ {{number_format($tongtien)}}</span></td>
                                             </tr>
                                         </tbody>
                                     </table>

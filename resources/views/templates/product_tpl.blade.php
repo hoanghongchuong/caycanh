@@ -17,10 +17,12 @@
         <section class="product-list">
             <div class="container">
                 <ul class="nav nav-tabs" role="tablist">
+                   @foreach($cate_pro as $cate) 
                   <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#senda" role="tab">Sen đá</a>
+                    <a class="nav-link " data-toggle="tab" href="#senda" role="tab">{{$cate->name}}</a>
                   </li>
-                  <li class="nav-item">
+                  @endforeach
+                  <!-- <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#xuongrong" role="tab">Xương rồng </a>
                   </li>
                   <li class="nav-item">
@@ -31,11 +33,11 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#caytreo" role="tab">Cây treo</a>
-                  </li>
+                  </li> -->
                 </ul>
 
                 <!-- Tab panes -->
-                <!-- <div class="tab-content">
+                <div class="tab-content">
                   <div class="tab-pane active show" id="senda" role="tabpanel">
                       <div class="row">
                         <div class="col-md-3 col-md-custom">
@@ -47,80 +49,7 @@
                                 <p class="price-wrap">$ 1,200.00</p>
                             </div>
                         </div>
-                        <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-2.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen đá xanh</a>
-                                <p class="price-wrap">$ 1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-3.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen tím chùm</a>
-                                <p class="price-wrap">$ 1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <label class="sale"><span>50%</span></label>
-                                
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-4.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen phật bà</a>
-                                <p class="price-wrap">
-                                    <span class="old-price">$ 1,200.00</span>
-                                    <span class="special-price">$ 600.00</span>
-                                    
-                                </p>
-                            </div>
-                        </div>
-                         <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-5.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen hồng phấn</a>
-                                <p class="price-wrap">$ 1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-4.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen đá xanh</a>
-                                <p class="price-wrap">$ 1,200.00</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <label class="sale"><span>50%</span></label>
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-1.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen tím chùm</a>
-                                <p class="price-wrap">
-                                    <span class="old-price">$ 1,200.00</span>
-                                    <span class="special-price">$ 600.00</span>
-                                    
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-md-custom">
-                            <div class="product-item text-center">
-                                <a href="product-detail.html" class="products-img">
-                                    <img src="images/pro-list-2.png" alt="" title="">
-                                </a>
-                                <a href="#" class="products-name">Sen phật bà</a>
-                                <p class="price-wrap">$ 1,200.00</p>
-                            </div>
-                        </div>
+                        
                     </div>
                   </div>
                   <div class="tab-pane" id="xuongrong" role="tabpanel">
@@ -175,7 +104,7 @@
                         </div>
                     </div>
                   </div>
-                </div> -->
+                </div>
                 @foreach($product as $p)
                 <div class="col-md-3 col-md-custom">
                     <div class="product-item text-center">

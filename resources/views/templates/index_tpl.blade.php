@@ -112,4 +112,26 @@
             </div>
         </section>
     </div>
+    <!-- <div class="modal fade" id="modal-add-cart">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title">Thông báo</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-default" id="alert-pro-name"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btnCart" data-dismiss="modal">Đóng</button>
+
+                    <a href="{!! url('gio-hang') !!}">
+                        <span class="btnCart">
+                            <i class="fa fa-eye"></i> Xem giỏ hàng
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> -->
 @endsection

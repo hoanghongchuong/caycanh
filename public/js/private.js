@@ -1,4 +1,5 @@
 jQuery(function ($) {
+
         //banner silde
         var owl = $(".banner-slider");
         owl.owlCarousel({
@@ -110,3 +111,33 @@ jQuery(function ($) {
     })(jQuery);
 
 });
+
+// $(document).ready(function(){
+//     $('.add-cart').click(function(event){
+//         event.preventDefault();
+
+//         var href = $(this).attr('href');
+//         var id = $('input#idpro').val();
+//         var qtt = $('input#soluong').val();
+//         if(!qtt) {
+//             qtt = 1;
+//         }
+
+//         $.ajax({
+//             url: href,
+//             type: 'GET',
+//             cache: false,
+//             data: {id:id,qtt:qtt},
+//             success: function(res){
+//                 if(res == 'ok'){
+//                     $('.top2').load(location.href + " .top2>*","");
+//                     $('#alert-pro-name').html('Sản phẩm <strong>'+name+'</strong> đã thêm vào giỏ hàng !');
+//                     $('#modal-add-cart').modal('show');
+//                 }else{
+//                     $('#alert-pro-name').html('Sản phẩm <strong>'+name+'</strong> đã hết hàng !');
+//                     $('#modal-add-cart').modal('show');
+//                 }
+//             }
+//         });
+//     });
+// });

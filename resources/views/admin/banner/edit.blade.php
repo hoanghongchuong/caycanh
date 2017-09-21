@@ -46,7 +46,7 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="">Vị trí</label>
+                <label for="">Trang</label>
                 <select name="position" class="form-control" id="">
                   @foreach($position as $item)
                   <option value="{{ $item['id'] }}" @if($data['position'] == $item['id']) selected @endif>{!! $item['name'] !!}</option>

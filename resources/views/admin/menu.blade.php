@@ -34,6 +34,8 @@
             <!-- <li><a href="admin/about/edit?type=san-pham"><i class="fa fa-th"></i> <span>Giới thiệu sản phẩm</span></a></li> -->
           </ul>
         </li>
+        <li><a href="admin/orders"><i class="fa fa-circle-o"></i> <span>Quản lý đơn hàng</span></a></li>
+        <li><a href="admin/campaign"><i class="fa fa-circle-o"></i> <span>Chiến dịch giảm giá</span></a></li>
         <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bài viết footer</span>

@@ -83,10 +83,10 @@
 							      	<label for="ten">Giá bán</label>
 							      	<input type="text" name="txtPrice"  onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value=""  class="form-control" />
 								</div>
-								<!-- <div class="form-group">
+								<div class="form-group">
 							      	<label for="ten">Giá cũ</label>
 							      	<input type="text" name="txtPriceOld"  onkeyup="FormatNumber(this);"  onKeyPress="return isNumberKey(event)" value=""  class="form-control" />
-								</div> -->
+								</div>
 								<div class="form-group">
 							      	<label for="ten">Mã SP</label>
 							      	<input type="text" name="txtCode"  value=""  class="form-control" />
