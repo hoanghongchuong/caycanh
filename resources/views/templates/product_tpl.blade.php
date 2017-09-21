@@ -17,12 +17,12 @@
         <section class="product-list">
             <div class="container">
                 <ul class="nav nav-tabs" role="tablist">
-                   @foreach($cate_pro as $cate) 
+                   
                   <li class="nav-item">
-                    <a class="nav-link " data-toggle="tab" href="#senda" role="tab">{{$cate->name}}</a>
+                    <a class="nav-link " data-toggle="tab" href="#senda" role="tab">Sen đá</a>
                   </li>
-                  @endforeach
-                  <!-- <li class="nav-item">
+               
+                  <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#xuongrong" role="tab">Xương rồng </a>
                   </li>
                   <li class="nav-item">
@@ -33,7 +33,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" data-toggle="tab" href="#caytreo" role="tab">Cây treo</a>
-                  </li> -->
+                  </li>
                 </ul>
 
                 <!-- Tab panes -->

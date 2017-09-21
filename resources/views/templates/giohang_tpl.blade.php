@@ -86,83 +86,94 @@
             </section>
             <section class="payment">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="payment-content">
-                                <h2 class="cart-title">Thông tin giao hàng</h2>
-                                <p class="checkout-as-guest">
-                                    <span>Đăng nhập</span>   /   Mua hàng không cần đăng nhập
-                                </p>
-                                <form class="form-info">
-                                    <fieldset class="fieldset">
-                                        <div class="field name">
-                                            <input type="text" name="txtName" placeholder="Học và tên">
+                    <form action="{{url('gui-don-hang')}}" class="form-info" method="post">
+                        {!! csrf_field() !!}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="payment-content">
+                                    <h2 class="cart-title">Thông tin giao hàng</h2>
+                                    <p class="checkout-as-guest">
+                                        <span>Đăng nhập</span>   /   Mua hàng không cần đăng nhập
+                                    </p>
+                                   
+                                        <fieldset class="fieldset">
+                                            <div class="field name">
+                                                <input type="text" name="full_name" placeholder="Học và tên">
+                                            </div>
+                                            <div class="field email">
+                                                <input type="text" name="email" placeholder="Email">
+                                            </div>
+                                             <div class="field phonenumber">
+                                                <input type="text" name="phone" placeholder="Số điện thoại">
+                                            </div>
+                                            <div class="field field-address">
+                                                <input type="text" name="address" placeholder="Địa chỉ">
+                                            </div>
+                                            <div class="field country">
+                                                <select name="country">
+                                                    <option>Tỉnh/Thành phố</option>
+                                                </select>
+                                            </div>
+                                            <div class="field town">
+                                                <select name="province">
+                                                    <option>Quận/Huyện</option>
+                                                </select>
+                                            </div>
+                                        </fieldset>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="payment-content">
+                                    <div class="discound-code">
+                                        <div class="control">
+                                            <input type="text" name="card_code" placeholder="Mã giảm giá">
+                                            <button class="btn btn-viewall btn-check-card">Sử dụng</button>
                                         </div>
-                                        <div class="field email">
-                                            <input type="text" name="txtEmail" placeholder="Email">
-                                        </div>
-                                         <div class="field phonenumber">
-                                            <input type="text" name="txtPhone" placeholder="Số điện thoại">
-                                        </div>
-                                        <div class="field field-address">
-                                            <input type="text" name="txtAddress" placeholder="Địa chỉ">
-                                        </div>
-                                        <div class="field country">
-                                            <select>
-                                                <option>Tỉnh/Thành phố</option>
-                                            </select>
-                                        </div>
-                                        <div class="field town">
-                                            <select>
-                                                <option>Quận/Huyện</option>
-                                            </select>
-                                        </div>
-                                    </fieldset>
-                                </form>
+                                    </div>
+                                    <div class="cart-total">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Tạm tính</th>
+                                                    <td><span class="price total-price">$ {{number_format($tongtien)}}</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Phí vận chuyển</th>
+                                                    <td><span class="price">$ 0</span></td>
+                                                </tr>
+                                                <tr class="total">
+                                                    <th>Tổng cộng</th>
+                                                    <td><span class="price total-price">$ {{number_format($tongtien)}}</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <div class="payment-content">
-                                <div class="discound-code">
-                                    <div class="control">
-                                        <input type="text" name="" placeholder="Mã giảm giá">
-                                        <button class="btn btn-viewall">Sử dụng</button>
-                                    </div>
-                                </div>
-                                <div class="cart-total">
-                                    <table class="table">
-                                        <tbody>
-                                            <tr>
-                                                <th>Tạm tính</th>
-                                                <td><span class="price">$ {{number_format($tongtien)}}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <th>Phí vận chuyển</th>
-                                                <td><span class="price">$ 0</span></td>
-                                            </tr>
-                                            <tr class="total">
-                                                <th>Tổng cộng</th>
-                                                <td><span class="price">$ {{number_format($tongtien)}}</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="action-toobar">
+                            <div class="primary"><a class="back" href="#">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                Quay lại
+                            </a></div>
+                            <div class="secondary float-right">
+                                <button class="btn btn-viewall btn-thanhtoan" type="submit">THANH TOÁN</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="action-toobar">
-                        <div class="primary"><a class="back" href="#">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                            Quay lại
-                        </a></div>
-                        <div class="secondary float-right">
-                            <button class="btn btn-viewall">THANH TOÁN</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </section>            
     </div>
 </div>
+
+<script>
+    window.urlCheckCard = '{{ route("checkCard") }}';
+    window.token = '{{ csrf_token() }}';
+    
+    
+</script>
 
 @endsection

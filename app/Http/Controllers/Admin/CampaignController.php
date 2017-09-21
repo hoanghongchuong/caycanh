@@ -19,10 +19,9 @@ class CampaignController extends Controller
 
     public function create(Request $req, $id = '')
     {
-    	
 		if ($req->isMethod('get')) {
 			if ($id) {
-    			$campaign = DB::table('campaigns')->first();
+    			$campaign = DB::table('campaigns')->where('id', $id)->first();
     			if (!$campaign) {
     				return redirect()->route('campaignIndex');
     			}
@@ -31,11 +30,29 @@ class CampaignController extends Controller
 			return view('admin.campaign.create', compact('campaign', 'cards'));
 		}
 		if ($req->isMethod('POST')) {
-			$data = $req->only('campaign_name', 'campaign_expired', 'campaign_type', 'campaign_value');
+			$data = $req->only('campaign_name', 'campaign_expired', 'campaign_type', 'campaign_value', 'card_numb');
 			$data['created_at'] = date('Y-m-d H:i:s');
 			$data['updated_at'] = date('Y-m-d H:i:s');
 			if ($id) {
-				DB::table('campaigns')->where('id', $id)->update($data);
+				try {
+					DB::beginTransaction();
+					if ($req->card_numb > $req->card_numb_old) {
+						$newCards = [];
+						for ($i=0; $i < $req->card_numb - $req->card_numb_old; $i++) { 
+							$newCards[] = [
+								'campaign_id' => $id,
+								'card_code'   => substr(str_random(rand(1, 1000000)), 0, 13),
+								'created_at' => date('Y-m-d H:i:s'),
+								'updated_at' => date('Y-m-d H:i:s'),
+							];
+						}
+						DB::table('campaign_cards')->insert($newCards);
+					}
+					DB::table('campaigns')->where('id', $id)->update($data);
+					DB::commit();
+				} catch (Exception $e) {
+					DB::rollBack();
+				}
 			} else {
 				try {
 					DB::beginTransaction();
@@ -52,7 +69,6 @@ class CampaignController extends Controller
 					DB::table('campaign_cards')->insert($cards);
 					DB::commit();
 				} catch (Exception $e) {
-					dd($e->getMessage());
 					DB::rollBack();
 				}
 				

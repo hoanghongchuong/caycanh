@@ -176,6 +176,8 @@
         </li> -->
         <li><a href="admin/position"><i class="fa fa-gear" aria-hidden="true"></i> <span>Vị trí quảng cáo</span></a></li>
         <li><a href="admin/banner"><i class="fa fa-gear" aria-hidden="true"></i> <span>Quản lý quảng cáo</span></a></li>
+        <li><a href="admin/province"><i class="fa fa-gear" aria-hidden="true"></i> <span>Quản lý tỉnh/ thành phố</span></a></li>
+         <li><a href="admin/district"><i class="fa fa-gear" aria-hidden="true"></i> <span>Quản lý quận/ huyện</span></a></li>
       </ul>
     </section>
 </aside>

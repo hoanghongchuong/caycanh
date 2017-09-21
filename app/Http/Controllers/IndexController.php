@@ -7,6 +7,8 @@ use App\NewsLetter;
 use App\Recruitment;
 use DB,Cache,Mail;
 use Cart;
+use App\Campaign;
+use App\CampaignCard;
 class IndexController extends Controller {
 	protected $setting = NULL;
 	/*
@@ -447,55 +449,15 @@ class IndexController extends Controller {
 	}
 
 	
-	// public function giohang(){
-	// 	$cart = Cart::content();
-		
-	// 	$total = Cart::total();
- //        return view('templates.giohang',compact('cart','total'));
-	// }
-	// public function cart(Request $request, $id){
-	// 	$products_buy = DB::table('products')->where('id',$id)->first();
-
-	// 	$sl = $request->get('qtt');
-	
- //        Cart::add(array(
-	//         'id'=>$id, 
-	//         'name'=>$products_buy->name, 
-	//         'code'=>$products_buy->code,
-	//         'qty'=>$sl ? $sl : 1,
-	//         'price'=>$products_buy->price,
-	//         'options'	=> [
-	// 						'alias'		=> $products_buy->alias,
-	// 						'cate_id'	=> $products_buy->cate_id,
-	// 						'photo'		=> $products_buy->photo,
-	// 						'code' => $products_buy->code
-	// 					]
-	// 	    )
-	//     );
- //        $content = Cart::content();
- //        return redirect()->route('giohang');
-	// }
-
-	// public function UpdateCart(Request $request){
-	// 	$inputs = $request->input('soluong');
-		
-	// 	if ($inputs) {
-	// 		foreach($inputs as $key => $val){
-	// 			Cart::update($key, $val);
-	// 		}
-	// 	}
-	// 	return redirect()->back();
-	// }
 	
 
 	public function getCart()
 	{
-		//$product_cart= Session::get('cart');
+
 		$product_cart= Cart::content();
 		$product_noibat = DB::table('products')->select()->where('status',1)->where('noibat','>',0)->orderBy('created_at','desc')->take(8)->get();
-		
-		// $huongdan_muahang = DB::table('about')->select()->where('com','huong-dan')->first();
-		// $camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->orderby('stt','asc')->get();
+				
+
 		$setting = Cache::get('setting');
 		// Cấu hình SEO
 		$title = "Giỏ hàng";
@@ -535,5 +497,64 @@ class IndexController extends Controller {
 	public function deleteCart($id){
         Cart::remove($id);
         return redirect('gio-hang');
+    }
+
+    public function checkCard(Request $req) {
+    	$card = (new CampaignCard)
+    		->join('campaigns', 'campaign_cards.campaign_id', '=', 'campaigns.id')
+    		->select('campaigns.campaign_value', 'campaigns.campaign_type')
+    		->where([
+    			'campaign_cards.card_code' => $req->card_code,
+    			'campaign_cards.del_flg' => 0,
+    			'campaign_cards.is_active' => 0,
+    			'campaigns.del_flg' => 0
+    		])
+    		->where('campaigns.campaign_expired', '>=', date('Y-m-d'))
+    		->first();
+    	if ($card) {
+	    	$total = $this->getTotalPrice();
+    		if ($card->campaign_type == 1) {
+    			$total = $total - $card->campaign_value;
+    		}
+    		if ($card->campaign_type == 2) {
+    			$total = $total * (100 - $card->campaign_value) / 100;
+    		}
+
+    		return number_format($total);
+    	}
+    	return false;
+    }
+
+    protected function getTotalPrice() 
+    {
+    	$cart = Cart::content();
+    	$total = 0;
+    	foreach ($cart as $key) {
+    		$total += $key->price * $key->qty;
+    	}
+    	return $total;
+    }
+
+    public function postOrder(Request $req){
+    	$order = $req->only('full_name', 'email', 'phone', 'address', 'country', 'province');
+    	$order['price'] = $this->getTotalPrice();
+    	if ($req->card_code) {
+    		$price = $this->checkCard($req);
+	    	if (!$price) {
+	    		return redirect()->back()->with('Mã giảm giá không .....');
+	    	}
+	    	$order['price'] = $this->checkCard($req);
+    	}
+    	$detail = [];
+    	$cart = Cart::content();
+    	foreach ($cart as $key) {
+    		$detail[] = [
+    			'product_name' => $key->name,
+    			'product_numb' => $key->qty,
+    			'product_price' => $key->price,
+    		];
+    	}
+    	$order['detail'] = json_encode($detail);
+    	dd($order);
     }
 }

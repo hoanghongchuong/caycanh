@@ -34,9 +34,11 @@ Route::post('cart/add', ['as' => 'addProductToCart', 'uses' => 'IndexController@
 Route::post('cart/update',['as' => 'updateCart', 'uses' => 'IndexController@updateCart']);
 Route::get('updatecart/{id}/{qty}',['as'=>'updatecart','uses'=>'IndexController@updatecart']);
 Route::get('xoa-gio-hang/{id}','IndexController@deleteCart');
-
+Route::post('gui-don-hang', ['as' =>'postOrder', 'uses'=> 'IndexController@postOrder']);
 
 Route::get('dich-vu',['as'=>'getDichvu', 'uses'=>'IndexController@getDichvu']);
+
+Route::post('card/check',['as'=>'checkCard', 'uses'=>'IndexController@checkCard']);
 
 Route::get('dich-vu/{id}',['as'=>'getDichVuList', 'uses'=>'IndexController@getDichVuList']);
 Route::get('chi-tiet-dich-vu/{id}.html',['as'=>'getDichVuDetail', 'uses'=>'IndexController@getDichVuDetail']);
@@ -46,7 +48,7 @@ Route::post('tuyen-dung',['as'=>'postTuyenDung', 'uses'=>'IndexController@postTu
 // Route::get('thu-vien-anh',['as'=>'getThuvienanh', 'uses'=>'IndexController@getThuvienanh']);
 
 // Route::get('hoi-vien',['as'=>'getHoivien', 'uses'=>'IndexController@getHoivien']);
-Route::post('gui-don-hang',['as'=>'postGuidonhang', 'uses'=>'GuiDonHangController@postGuidonhang']);
+// Route::post('gui-don-hang',['as'=>'postGuidonhang', 'uses'=>'GuiDonHangController@postGuidonhang']);
 Route::get('{id}.html',['as'=>'getProductDetail', 'uses'=>'IndexController@getProductDetail']);
 Route::get('bai-viet/{id}.html',['as'=>'getBaiVietDetail', 'uses'=>'IndexController@getBaiVietDetail']);
 Route::get('error/404.html',['as'=>'getErrorNotFount', 'uses'=>'IndexController@getErrorNotFount']);
@@ -249,6 +251,29 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 		
 		Route::get('{id}/deleteList',['as'=>'admin.slider.getDeleteList','uses'=>'Admin\SliderController@getDeleteList']);
 	});
+
+	Route::group(['prefix' => 'province'], function(){
+		Route::get('/',['as'=>'admin.province.index', 'uses' => 'Admin\ProvinceController@index']);
+		Route::get('add',['as'=>'admin.province.getCreate', 'uses' => 'Admin\ProvinceController@getCreate']);
+		Route::post('add',['as'=>'admin.province.postCreate', 'uses' => 'Admin\ProvinceController@postCreate']);
+
+		Route::get('edit/{id}',['as'=>'admin.province.getEdit', 'uses' => 'Admin\ProvinceController@getEdit']);
+		Route::post('edit/{id}',['as'=>'admin.province.postEdit', 'uses' => 'Admin\ProvinceController@postEdit']);
+
+		Route::get('delete/{id}',['as'=>'admin.province.delete', 'uses' => 'Admin\ProvinceController@delete']);
+	});
+
+	Route::group(['prefix' => 'district'], function(){
+		Route::get('/',['as'=>'admin.district.index', 'uses' => 'Admin\DistrictController@index']);
+		Route::get('add',['as'=>'admin.district.getCreate', 'uses' => 'Admin\DistrictController@getCreate']);
+		Route::post('add',['as'=>'admin.district.postCreate', 'uses' => 'Admin\DistrictController@postCreate']);
+
+		Route::get('edit/{id}',['as'=>'admin.district.getEdit', 'uses' => 'Admin\DistrictController@getEdit']);
+		Route::post('edit/{id}',['as'=>'admin.district.postEdit', 'uses' => 'Admin\DistrictController@postEdit']);
+
+		Route::get('delete/{id}',['as'=>'admin.district.delete', 'uses' => 'Admin\DistrictController@delete']);
+	});
+
 	Route::post('uploadImg', ['as'=>'admin.uploadImg' ,'uses'=>'Admin/UploadController@uploadImg']);
 	Route::post('dropzone/store', ['as'=>'dropzone.store','uses'=>'Admin/ProductController@dropzoneStore']);
 

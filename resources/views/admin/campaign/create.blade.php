@@ -21,7 +21,7 @@
       @include('admin.messages_error')
         <div class="box-body">
           
-          <form name="frmAdd" method="post" action="{!! route('campaignCreate') !!}" enctype="multipart/form-data">
+          <form name="frmAdd" method="post" action="{!! route('campaignCreate', ['id' => isset($campaign) ? $campaign->id : '' ]) !!}">
             <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
             
               
@@ -52,7 +52,8 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Số lượng thẻ</label>
-                <input type="text" name="card_numb" class="form-control" value="">
+                <input type="number" name="card_numb" class="form-control" value="{{ isset($campaign) ? $campaign->card_numb : 1 }}" min="{{ isset($campaign) ? $campaign->card_numb : 1 }}">
+                <input type="hidden" name="card_numb_old" value="{{ isset($campaign) ? $campaign->card_numb : 1 }}">
               </div>
             </div>
             <div class="col-md-6">

@@ -77,6 +77,32 @@ jQuery(function ($) {
         });
     });
 
+
+
+    $('.btn-check-card').on('click', function () {
+        var code = $('[name=card_code]').val();
+        $.ajax({
+            url: window.urlCheckCard,
+            type: 'POST',
+            data: {
+                card_code: code,
+                _token: window.token
+            },
+            success: function (res) {
+                if (res) {
+                    $('.total-price').html(res);
+                } else {
+                    alert('Card không tồn tại hoặc đã sử dụng');
+                }
+            },
+            error: function () {
+
+            }
+        })
+    });
+
+    
+
     (function( $ ) {
 
         var $container = $('.masonry-container');
@@ -141,3 +167,24 @@ jQuery(function ($) {
 //         });
 //     });
 // });
+// 
+
+Number.prototype.number_format = function(symbol, length) {
+    var v = this.valueOf()
+    if (!length) length = 3
+    if (v.toString().length <= length) return v
+    if (!symbol) symbol = '.'
+    v = v.toString().split('')
+    var r = ''
+    for (var i = 0; i < v.length; i++) {
+        if (i % length == (v.length % length)) {
+            r += symbol + v[i];
+        } else {
+            r += v[i];
+        }
+    }
+    if (r.substring(0, 1) == symbol) {
+        r = r.substring(1)
+    }
+    return r
+}
