@@ -18,7 +18,7 @@
       listid=listid.substr(1);   //alert(listid);
       if (listid=="") { alert("Bạn chưa chọn mục nào"); return false;}
       hoi= confirm("Bạn có chắc chắn muốn xóa?");
-      if (hoi==true) document.location = homeUrl()+"/admin/newscate/"+listid+"/delete_list?type={{@$_GET[type]}}";
+      if (hoi==true) document.location = homeUrl()+"/admin/campaign/card/delete_list/"+listid;
     });
   });
 </script> -->
@@ -53,42 +53,25 @@
                 <!-- <th style="width: 20px;"><input type="checkbox" name="chonhet" class="minimal" id="chonhet" /></th> -->
                 <th class="text-center with_dieuhuong">Stt</th>
                 
-                <th>Tên</th>
-                <th>Loại</th>
-                <th>Giá trị</th>
-                <th>Ngày hết hạn</th>
+                <th>Mã giảm giá</th>
+                <!-- <th>Loại</th> -->
+                
                 <!-- <th class="text-center with_dieuhuong">Hiển thị</th> -->
-                <th class="text-center with_dieuhuong">Sửa</th>
+                <!-- <th class="text-center with_dieuhuong">Sửa</th> -->
                 <th class="text-center with_dieuhuong">Xóa</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($campaigns as $key=>$item)
+              @foreach($data as $key=>$item)
               <tr>
                 <!-- <td><input type="checkbox" name="chon" id="chon" value="" class="chon" /></td> -->
                 <td>{{$key+1}}</td>
-                <td>{{$item->campaign_name}}</td>
-                <td>
-                    <?php
-                        if($item->campaign_type == 1){
-                          echo "Trừ tiền";
-                        }
-                        
-                        if($item->campaign_type == 2){
-                          echo "Trừ %";
-                        }
-
-                    ?>
-
-                </td>
-                <td>{{$item->campaign_value}}</td>
-                <td>{{$item->campaign_expired}}</td>
-                               
+                <td>{{$item->card_code}}</td>
+                                            
                 
-                
-                <td class="text-center with_dieuhuong">
+              <!--   <td class="text-center with_dieuhuong">
                   <i class="fa fa-pencil fa-fw"></i><a href="admin/campaign/create/{{$item->id}}">Edit</a>
-                </td>
+                </td> -->
                 <td class="text-center">
                   <i class="fa fa-trash-o fa-fw"></i><a onClick="if(!confirm('Xác nhận xóa')) return false;" href="{{asset('admin/campaign/delete/'.$item->id)}}">Delete</a>
                 </td>
@@ -100,7 +83,7 @@
         <div class="box-footer col-md-12">
           <div class="col-md-6">
             <input type="button" onclick="javascript:window.location='admin/campaign/create'" value="Thêm" class="btn btn-primary" />
-            <!-- <button type="button" id="xoahet" class="btn btn-success">Xóa</button> -->
+            <button type="button" id="xoahet" class="btn btn-success">Xóa</button>
             <input type="button" value="Thoát" onclick="javascript:window.location='admin'" class="btn btn-danger" />
 
           </div>

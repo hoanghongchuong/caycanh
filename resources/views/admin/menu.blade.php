@@ -24,7 +24,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <!-- <li class="header">MAIN NAVIGATION</li> -->
-        <li class="treeview active">
+        <li class="treeview ">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Quản lý sản phẩm</span> <i class="fa fa-angle-left pull-right"></i>
           </a>
@@ -35,7 +35,15 @@
           </ul>
         </li>
         <li><a href="admin/orders"><i class="fa fa-circle-o"></i> <span>Quản lý đơn hàng</span></a></li>
-        <li><a href="admin/campaign"><i class="fa fa-circle-o"></i> <span>Chiến dịch giảm giá</span></a></li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-circle-o"></i> <span>Chương trình khuyến mại</span> <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="admin/campaign"><i class="fa fa-circle-o"></i> <span>Danh sách</span></a></li>
+            <li><a href="admin/campaign/card"><i class="fa fa-circle-o"></i> <span>Mã giảm giá</span></a></li>
+          </ul>
+        </li>
         <!-- <li class="treeview">
           <a href="#">
             <i class="fa fa-edit"></i> <span>Bài viết footer</span>

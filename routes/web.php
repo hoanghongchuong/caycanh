@@ -25,14 +25,13 @@ Route::get('cam-nang/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');
 
-
-// Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@getProductList']);
+Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@getProductList']);
 
 // gio hang
 Route::get('gio-hang',['as'=>'getCart', 'uses'=>'IndexController@getCart']);
 Route::post('cart/add', ['as' => 'addProductToCart', 'uses' => 'IndexController@addCart']);
 Route::post('cart/update',['as' => 'updateCart', 'uses' => 'IndexController@updateCart']);
-Route::get('updatecart/{id}/{qty}',['as'=>'updatecart','uses'=>'IndexController@updatecart']);
+// Route::get('updatecart/{id}/{qty}',['as'=>'updatecart','uses'=>'IndexController@updatecart']);
 Route::get('xoa-gio-hang/{id}','IndexController@deleteCart');
 Route::post('gui-don-hang', ['as' =>'postOrder', 'uses'=> 'IndexController@postOrder']);
 
@@ -79,9 +78,17 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 		Route::post('updateinfo',['as'=>'admin.users.updateinfo','uses'=>'Admin\UsersController@updateinfo']);
 	});
 
-	Route::get('campaign', ['as' => 'campaignIndex', 'uses' => 'Admin\CampaignController@index']);
-	Route::any('campaign/create/{id?}', ['as' => 'campaignCreate', 'uses' => 'Admin\CampaignController@create']);
-	Route::get('campaign/delete/{id}', ['as' => 'campaignDelete', 'uses' => 'Admin\CampaignController@delete']);
+	// Chương trình khuyến mại, giảm giá
+	Route::group(['prefix' => 'campaign'], function(){
+		Route::get('/', ['as' => 'campaignIndex', 'uses' => 'Admin\CampaignController@index']);
+		Route::any('/create/{id?}', ['as' => 'campaignCreate', 'uses' => 'Admin\CampaignController@create']);
+		Route::get('/delete/{id}', ['as' => 'campaignDelete', 'uses' => 'Admin\CampaignController@delete']);
+	});
+	Route::group(['prefix' => 'campaign/card'], function(){
+		Route::get('/', ['as' => 'campaignCardIndex', 'uses' => 'Admin\CampaignController@getCard']);
+		Route::get('delete_list/{id}',['as'=>'deleteListCode','uses'=>'Admin\CampaignController@getDeleteList']);
+	});
+
 
 
 	Route::group(['prefix' => 'productcate'], function(){
@@ -113,19 +120,31 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 		Route::get('upload',['as'=>'admin.product.upload','uses'=>'Admin\ProductController@post_upload']);
 	});
 
-	Route::group(['prefix' => 'orders'], function(){
-		Route::get('/',['as'=>'admin.order.index','uses'=>'Admin\OrderController@getList']);
-		Route::get('add',['as'=>'admin.orders.getAdd','uses'=>'Admin\OrdersController@getAdd']);
-		Route::post('postAdd',['as'=>'admin.orders.postAdd','uses'=>'Admin\OrdersController@postAdd']);
+	// Route::group(['prefix' => 'orders'], function(){
+	// 	Route::get('/',['as'=>'admin.order.index','uses'=>'Admin\OrderController@getList']);
+	// 	Route::get('add',['as'=>'admin.orders.getAdd','uses'=>'Admin\OrdersController@getAdd']);
+	// 	Route::post('postAdd',['as'=>'admin.orders.postAdd','uses'=>'Admin\OrdersController@postAdd']);
 
-		Route::get('edit',['as'=>'admin.orders.getEdit','uses'=>'Admin\OrdersController@getEdit']);
+	// 	Route::get('edit',['as'=>'admin.orders.getEdit','uses'=>'Admin\OrdersController@getEdit']);
 
-		Route::post('edit',['as'=>'admin.orders.update','uses'=>'Admin\OrdersController@update']);
+	// 	Route::post('edit',['as'=>'admin.orders.update','uses'=>'Admin\OrdersController@update']);
 
-		Route::get('{id}/delete',['as'=>'admin.orders.getDelete','uses'=>'Admin\OrdersController@getDelete']);
-		Route::get('{id}/delete_list',['as'=>'admin.orders.getDeleteList','uses'=>'Admin\OrdersController@getDeleteList']);
-	});
+	// 	Route::get('{id}/delete',['as'=>'admin.orders.getDelete','uses'=>'Admin\OrdersController@getDelete']);
+	// 	Route::get('{id}/delete_list',['as'=>'admin.orders.getDeleteList','uses'=>'Admin\OrdersController@getDeleteList']);
+	// });
 	
+		Route::group(['prefix' => 'orders'], function(){
+		Route::get('/',['as'=>'admin.bill.index','uses'=>'Admin\BillController@getList']);
+		Route::get('add',['as'=>'admin.obill.getAdd','uses'=>'Admin\OBillController@getAdd']);
+		Route::post('postAdd',['as'=>'admin.obill.postAdd','uses'=>'Admin\OBillController@postAdd']);
+		Route::get('edit',['as'=>'admin.obill.getEdit','uses'=>'Admin\OBillController@getEdit']);
+
+		Route::post('edit',['as'=>'admin.obill.update','uses'=>'Admin\OBillController@update']);
+
+		Route::get('{id}/delete',['as'=>'admin.obill.getDelete','uses'=>'Admin\OBillController@getDelete']);
+		Route::get('{id}/delete_list',['as'=>'admin.obill.getDeleteList','uses'=>'Admin\OBillController@getDeleteList']);
+	});
+
 	Route::group(['prefix' => 'newscate'], function(){
 		Route::get('/',['as'=>'admin.newscate.index','uses'=>'Admin\NewsCateController@getDanhSach']);
 		Route::get('add',['as'=>'admin.newscate.getAdd','uses'=>'Admin\NewsCateController@getAdd']);
@@ -135,8 +154,8 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 
 		Route::post('edit',['as'=>'admin.newscate.update','uses'=>'Admin\NewsCateController@update']);
 
-		Route::get('{id}/delete',['as'=>'admin.newscate.getDelete','uses'=>'Admin\NewsCateController@getDelete']);
-		Route::get('{id}/delete_list',['as'=>'admin.newscate.getDeleteList','uses'=>'Admin\NewsCateController@getDeleteList']);
+		Route::get('delete/{id}',['as'=>'admin.newscate.getDelete','uses'=>'Admin\NewsCateController@getDelete']);
+		// Route::get('{id}/delete_list',['as'=>'admin.newscate.getDeleteList','uses'=>'Admin\NewsCateController@getDeleteList']);
 	});
 	// Route::group(['prefix' => 'menu'], function(){
 	// 	Route::get('/',['as'=>'admin.menu.index','uses'=>'Admin\MenuController@getDanhSach']);

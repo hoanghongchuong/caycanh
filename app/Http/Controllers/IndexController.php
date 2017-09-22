@@ -8,6 +8,7 @@ use App\Recruitment;
 use DB,Cache,Mail;
 use Cart;
 use App\Campaign;
+use App\Bill;
 use App\CampaignCard;
 class IndexController extends Controller {
 	protected $setting = NULL;
@@ -68,8 +69,8 @@ class IndexController extends Controller {
 	}
 	public function getProduct()
 	{
-		$cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','desc')->get();
-		$product = DB::table('products')->select()->where('status',1)->orderby('stt','desc')->paginate(6);
+		$cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','asc')->get();
+		$product = DB::table('products')->select()->where('status',1)->orderby('stt','desc')->paginate(4);
 		// dd($product_cate);
 		// $banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
 		// $camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->orderby('stt','asc')->get();
@@ -89,6 +90,7 @@ class IndexController extends Controller {
 	public function getProductList($id)
 	{
 		//Tìm article thông qua mã id tương ứng
+		$cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','asc')->get();
 		$product_cate = DB::table('product_categories')->select()->where('status',1)->where('alias',$id)->get()->first();
 		if(!empty($product_cate)){
 			$product = DB::table('products')->select()->where('status',1)->where('cate_id',$product_cate->id)->orderBy('stt','asc')->paginate(12);
@@ -107,7 +109,7 @@ class IndexController extends Controller {
 			$img_share = asset('upload/product/'.$product_cate->photo);
 
 			// End cấu hình SEO
-			return view('templates.productlist_tpl', compact('product','product_cate','banner_danhmuc','doitac','keyword','description','title','img_share'));
+			return view('templates.productlist_tpl', compact('product','product_cate','banner_danhmuc','doitac','keyword','description','title','img_share','cate_pro'));
 		}else{
 			return redirect()->route('getErrorNotFount');
 		}
@@ -168,18 +170,16 @@ class IndexController extends Controller {
 		$keyword = "Tìm kiếm: ".$search;
 		$description = "Tìm kiếm: ".$search;
 		$img_share = '';
-
 		// End cấu hình SEO
-		$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','tim-kiem')->get()->first();
 		
-		$product = DB::table('products')->select()->where('name', 'LIKE', '%' . $search . '%')->orderBy('id','DESC')->paginate(12);
+		$product = DB::table('products')->select()->where('name', 'LIKE', '%' . $search . '%')->orderBy('id','DESC')->get();
 		// dd($product);
-		return view('templates.search_tpl', compact('product','banner_danhmuc','keyword','description','title','img_share'));
+		return view('templates.search_tpl', compact('product','banner_danhmuc','keyword','description','title','img_share','search'));
 	}
+
 	public function getNews()
 	{
 		$tintuc = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('id','desc')->paginate(6);
-
 		$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','tin-tuc')->get()->first();
 		$tintuc_noibat = DB::table('news')->select()->where('status',1)->where('noibat','>',0)->where('com','tin-tuc')->take(12)->get();
 		// $camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->orderby('stt','asc')->get();
@@ -536,7 +536,16 @@ class IndexController extends Controller {
     }
 
     public function postOrder(Request $req){
-    	$order = $req->only('full_name', 'email', 'phone', 'address', 'country', 'province');
+
+    	$bill = new Bill;
+    	$bill->full_name = $req->full_name;
+    	$bill->email = $req->email;
+    	$bill->phone = $req->phone;
+    	$bill->address = $req->address;
+    	$bill->province = $req->province;
+    	$bill->district = $req->district;
+
+    	// $order = $req->only('full_name', 'email', 'phone', 'address', 'province', 'district');
     	$order['price'] = $this->getTotalPrice();
     	if ($req->card_code) {
     		$price = $this->checkCard($req);
@@ -547,14 +556,25 @@ class IndexController extends Controller {
     	}
     	$detail = [];
     	$cart = Cart::content();
+    	
     	foreach ($cart as $key) {
+
     		$detail[] = [
     			'product_name' => $key->name,
     			'product_numb' => $key->qty,
     			'product_price' => $key->price,
+    			'product_img' => $key->options->photo,
+    			'product_code' => $key->options->code
     		];
     	}
     	$order['detail'] = json_encode($detail);
-    	dd($order);
+    	$bill->detail = json_encode($detail);
+    	$bill->save();
+    	Cart::destroy();
+
+    	echo "<script type='text/javascript'>
+				alert('Cảm ơn bạn đã đặt hàng, chúng tôi sẽ liên hệ với bạn sớm nhất!');
+				window.location = '".url('/')."' 
+			</script>";
     }
 }

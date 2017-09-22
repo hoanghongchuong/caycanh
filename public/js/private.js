@@ -36,7 +36,7 @@ jQuery(function ($) {
             dots: false,
             margin: 30,
             nav: true,
-            navText: ["<img src='images/prev.png'>","<img src='images/next.png'>"],
+            navText: ["<img src='public/images/prev.png'>","<img src='public/images/next.png'>"],
             responsive:{
                 0:{
                     items:1,
@@ -77,8 +77,6 @@ jQuery(function ($) {
         });
     });
 
-
-
     $('.btn-check-card').on('click', function () {
         var code = $('[name=card_code]').val();
         $.ajax({
@@ -96,7 +94,7 @@ jQuery(function ($) {
                 }
             },
             error: function () {
-
+                
             }
         })
     });
@@ -137,37 +135,6 @@ jQuery(function ($) {
     })(jQuery);
 
 });
-
-// $(document).ready(function(){
-//     $('.add-cart').click(function(event){
-//         event.preventDefault();
-
-//         var href = $(this).attr('href');
-//         var id = $('input#idpro').val();
-//         var qtt = $('input#soluong').val();
-//         if(!qtt) {
-//             qtt = 1;
-//         }
-
-//         $.ajax({
-//             url: href,
-//             type: 'GET',
-//             cache: false,
-//             data: {id:id,qtt:qtt},
-//             success: function(res){
-//                 if(res == 'ok'){
-//                     $('.top2').load(location.href + " .top2>*","");
-//                     $('#alert-pro-name').html('Sản phẩm <strong>'+name+'</strong> đã thêm vào giỏ hàng !');
-//                     $('#modal-add-cart').modal('show');
-//                 }else{
-//                     $('#alert-pro-name').html('Sản phẩm <strong>'+name+'</strong> đã hết hàng !');
-//                     $('#modal-add-cart').modal('show');
-//                 }
-//             }
-//         });
-//     });
-// });
-// 
 
 Number.prototype.number_format = function(symbol, length) {
     var v = this.valueOf()

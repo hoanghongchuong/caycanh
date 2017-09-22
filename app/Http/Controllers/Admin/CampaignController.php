@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB, Exception;
 use Hash;
-
+use App\CampaignCard;
 
 class CampaignController extends Controller
 {
@@ -89,4 +89,19 @@ class CampaignController extends Controller
     	}
     	return redirect()->route('campaignIndex');
     }
+
+    public function getCard(){
+    	$data = DB::table('campaign_cards')->get();
+    	return view('admin.campaign_cart.index', compact('data'));
+    }
+    public function getDeleteList($id){
+        $listid = explode(",",$id);
+        dd($listid);
+        foreach($listid as $listid_item){
+            $data = CampaignCard::findOrFail($listid_item);
+            $data->delete();
+        }
+        return redirect(route('campaignCardIndex'))->with('status','Xóa thành công');
+    }
+
 }

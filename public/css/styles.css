@@ -783,11 +783,14 @@ header .logo{
 
 }
 @media only screen and (max-width: 567px){
-    .nav.nav-tabs{
+    .nav.nav-tabs, .cate-product{
         display: block;
     }
-    .nav-tabs .nav-item{
+    .nav-tabs .nav-item, .cate-product{
         margin: 0;
+    }
+    .cate-product li a{
+        padding: 10px 20px;
     }
     .map_container{
         padding-bottom: 56%;
@@ -862,6 +865,9 @@ header .logo{
 }
 @media only screen and (min-width: 1280px){
     .nav.nav-tabs .nav-link{
+        padding: 10px 50px;
+    }
+    .cate-product li a{
         padding: 10px 50px;
     }
 }
@@ -1146,4 +1152,34 @@ header.is-fixed {
     -ms-transform: translateY(-50%) rotate(90deg);
     -o-transform: translateY(-50%) rotate(90deg);
     transform: translateY(-50%) rotate(90deg);
+}
+/*fix css*/
+.cate-product{
+    border: 0;
+    background: #fff;
+    padding: 35px;
+}
+.cate-product li{
+    margin-right: 10px;
+}
+.cate-product li a{
+    font-size: 20px;
+    transition: 0.3s all ease;
+    border: 0;
+    /*padding: 10px 20px;*/
+}
+.cate-product li a.active{
+    background: #000;
+    color: #fff;
+    border-radius: 10px;
+    /*padding: 10px 20px;*/
+    font-size: 20px;
+    transition: 0.3s all ease;
+}
+.cate-product li a:hover{
+    background: #000;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 20px;
+    transition: 0.3s all ease;   
 }

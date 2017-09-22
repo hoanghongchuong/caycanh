@@ -1,57 +1,65 @@
 @extends('index')
 @section('content')
-<?php
-    $setting = Cache::get('setting');
-    $slogan = Cache::get('slogan');
+<?php $product_list = Cache::get('product_list'); ?>
+<div class="main-content cd-main-content pages-index">
+        @include('templates.layout.slider')
 
-    $tintuc_moinhat = Cache::get('tintuc_moinhat');
-    $about_tintuc = Cache::get('about_tintuc');
-    $mauthietkedep = Cache::get('mauthietkedep');
-    $about_mauthietke = Cache::get('about_mauthietke');
-    $doitac = Cache::get('doitac');
-?>
-<section class="vk-content">
-    <div class="vk-page product">
-        <div class="container">
-            <div class="vk-inner-wrapper">
-                <div class="vk-inner-container">
+        <section class="breadcrumbs">
+            <div class="container">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{url('')}}">Trang chủ</a></li>
+                  <li class="breadcrumb-item"><a href="{{url('san-pham')}}"> Sản phẩm</a></li>
+                  <li class="breadcrumb-item"><a href="#"> {{$product_cate->name}}</a></li>
+                </ol>
+            </div>
+        </section>
 
-                    <div class="vk-box-heading text-uppercase text-center mb-4">
-                        <h1 class="vk-heading-page mb-3">{!! $title !!}</h1>
-                        <img src="{!! asset('public/images/icon/1.png') !!}" alt="" class="d-inline-block img-fluid">
-                    </div> <!--./vk-box-heading-->
+        <section class="product-list">
+            <div class="container">
+              <ul class="nav cate-product">
+                @foreach($cate_pro as $cate)
+                  <li><a href="{{url('san-pham/'.$cate->alias)}}" class="<?php if($cate->id == $product_cate->id) echo'active' ?>">{{$cate->name}}</a></li>
+                @endforeach
+                
+              </ul>
+              <div class="row tab-content">
+                @foreach($product as $item)
+                  <div class="col-md-3 col-md-custom">
+                      <div class="product-item text-center">
+                          <a href="{{url('san-pham/'.$item->alias.'.html')}}" class="products-img">
+                              <img src="{{asset('upload/product/'.$item->photo)}}" alt="" title="">
+                          </a>
+                          <a href="#" class="products-name">{{$item->name}}</a>
+                          <p class="price-wrap">$ {{ number_format($item->price) }}</p>
+                      </div>
+                  </div>
+                @endforeach  
+              </div>
+                
+                
+                <div class="paginations">
+                    <!-- <nav aria-label="Page navigation example">
+                      <ul class="pagination justify-content-center">
+                        <li class="page-item ">
+                          <a class="page-link previous" href="#" tabindex="-1"><</a>
+                        </li>
+                        <li class="page-item"><a class="page-link active" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                        <li class="page-item ">
+                          <a class="page-link next" href="#">></a>
+                        </li>
+                      </ul>
+                    </nav> -->
+                    {!! $product->links() !!}
+                </div>
+                
+                
+            </div>
+            
+        </section>      
+</div>
 
-
-                    <div class="vk-product">
-
-                        <div class="vk-shop-item-list row mt-4 mb-4 mb-lg-0 mt-lg-0">
-
-                            @foreach($product as $item)
-                            <div class="col-lg-4 col-md-6 item">
-                                <div class="vk-shop-item ">
-                                    <div class="vk-img-frame">
-                                        <a href="{!! asset($item->alias.'.html') !!}" class="vk-img">
-                                            <img src="{!! asset('upload/product/'.$item->photo) !!}" alt="">
-                                        </a>
-                                        <div class="vk-button">
-                                            <a href="{!! asset($item->alias.'.html') !!}" class="vk-btn vk-btn-readmore">Xem chi tiết</a>
-                                        </div>
-                                    </div>
-                                </div> <!--./vk-shop-special-item-->
-                            </div> <!--./item-->
-                            @endforeach
-                        </div> <!--./vk-shop-item-list-->
-
-                        {{ $product->links() }}
-
-                    </div> <!--./vk-product-->
-
-
-                </div> <!--./vk-inner-container-->
-            </div> <!--./vk-inner-wrapper-->
-
-        </div> <!--./container-->
-    </div> <!--./product-->
-
-</section>
 @endsection
+

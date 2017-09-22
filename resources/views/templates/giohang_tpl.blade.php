@@ -1,6 +1,6 @@
 @extends('index')
 @section('content')
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 
     function updatecart(id,kieu,qty){
         var qty = parseInt($('#qty'+id).val());
@@ -17,71 +17,72 @@
         }
         this.document.location.href = "updatecart/"+id+"/"+qty;
     }
-</script>
+</script> -->
 <div class="cart-index-index">
     <div class="main-content">
             <section class="cart-container">
                 <div class="container">
+
                     <h2 class="cart-title">Giỏ hàng</h2>
-                     <form action="{{route('updateCart')}}" method="post">
-                    <table class="table table-wrapper table-responsive text-center">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>STT</th>
-                                <th>Mã sản phẩm</th>
-                                <th>Tên sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Giá</th>
-                            </tr>
-                        </thead>
-                        <form action="{{route('updateCart')}}" method="post">
-                            <input type="hidden" name="_token" value="{!! csrf_token() !!}">
-                            <?php $tongtien=0; $stt =1 ?>
-                            @foreach($product_cart as $key=>$item)
-                            <?php
-                                $tongtien+=$item->price*$item->qty;
-                            ?>
-
-                            <tbody>
-                                <input type="hidden" name="product_id" value="{{ $item->rowId }}">
+                    
+                        <table class="table table-wrapper table-responsive text-center">
+                            <thead>
                                 <tr>
-                                    <td><a  id="{{$item->rowId}}" href="{{url('xoa-gio-hang/'.$item->rowId)}}">Xóa</a></td>
-                                    <td>{{$stt}}</td>
-                                    <td>{{$item->options->code}}</td>
-                                    <td class="details-product">
-                                        <div class="pro-details">
-                                            <a href="product-detail.html" title=""><img src="images/cart-1.png" alt="" title=""></a>
-                                            <h2><a href="product-detail.html" title="">{{$item->name}}</a></h2>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="action-number">
-                                            <span class="fa fa-minus minus" aria-hidden="true"></span>
-                                            <input type="number" value="{{$item->qty}}" id="{{ $item->rowId }}"  name="numb[{{$key}}]" class="qty">
-                                            <span class="fa fa-plus add" aria-hidden="true"></span>
-                                        </div>
-                                    </td>
-                                    <td class="sub-total"><span class="price-container price">$ {{ number_format($item->price) }}</span></td>
+                                    <th></th>
+                                    <th>STT</th>
+                                    <th>Mã sản phẩm</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Giá</th>
                                 </tr>
-                            </tbody>
-                            <?php $stt++ ?>
-                            @endforeach
-                            
-                       
-                        
-                        <tfoot>
+                            </thead>
+                            <form action="{{route('updateCart')}}" method="post">
+                                    <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                                    <?php $tongtien=0; $stt =1 ?>
+                                    @foreach($product_cart as $key=>$item)
+                                    <?php
+                                        $tongtien+=$item->price*$item->qty;
+                                    ?>
+                                    <tbody>
+                                        <input type="hidden" name="product_id" value="{{ $item->rowId }}">
+                                        <tr>
+                                            <td><a  id="{{$item->rowId}}" href="{{url('xoa-gio-hang/'.$item->rowId)}}">Xóa</a></td>
+                                            <td>{{$stt}}</td>
+                                            <td>{{$item->options->code}}</td>
+                                            <td class="details-product">
+                                                <div class="pro-details">
+                                                    <a href="product-detail.html" title=""><img src="{{asset('upload/product/'.$item->options->photo)}}" alt="" title=""></a>
+                                                    <h2><a href="product-detail.html" title="">{{$item->name}}</a></h2>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="action-number">
+                                                    <span class="fa fa-minus minus" aria-hidden="true"></span>
+                                                    <input type="number" value="{{$item->qty}}" id="{{ $item->rowId }}"  name="numb[{{$key}}]" class="qty">
+                                                    <span class="fa fa-plus add" aria-hidden="true"></span>
+                                                </div>
+                                            </td>
+                                            <td class="sub-total"><span class="price-container price">$ {{ number_format($item->price) }}</span></td>
+                                        </tr>
+                                    </tbody>
+                                    <?php $stt++ ?>
+                                    @endforeach
+                                
+                                                           
+                                <tfoot>
 
-                            <tr>
-                                <th class="text-right" colspan="5">Tạm tính </th>
+                                    <tr>
+                                        <th class="text-right" colspan="5">Tạm tính </th>
 
-                                <td class="grand-total price">$ {{ number_format($tongtien)}}</td>
-                            </tr>
-                        </tfoot>
+                                        <td class="grand-total price">$ {{ number_format($tongtien)}}</td>
+                                    </tr>
+                                </tfoot>
+                                
+                            </table>
+                            <div class="pull-right"> <button type="" id="btn-update-cart">Cập nhật</button></div>
                         
-                    </table>
-                    <div class="pull-right"> <button type="submit" id="btn-update-cart">Cập nhật</button></div>
                     </form>
+
                 </div>
             </section>
             <section class="payment">
@@ -98,24 +99,24 @@
                                    
                                         <fieldset class="fieldset">
                                             <div class="field name">
-                                                <input type="text" name="full_name" placeholder="Học và tên">
+                                                <input type="text" name="full_name" required="required" placeholder="Học và tên">
                                             </div>
                                             <div class="field email">
-                                                <input type="text" name="email" placeholder="Email">
+                                                <input type="email" name="email" required="required" placeholder="Email">
                                             </div>
                                              <div class="field phonenumber">
-                                                <input type="text" name="phone" placeholder="Số điện thoại">
+                                                <input type="text" name="phone" required="required" placeholder="Số điện thoại">
                                             </div>
                                             <div class="field field-address">
-                                                <input type="text" name="address" placeholder="Địa chỉ">
+                                                <input type="text" name="address" required="required" placeholder="Địa chỉ">
                                             </div>
                                             <div class="field country">
-                                                <select name="country">
+                                                <select name="province">
                                                     <option>Tỉnh/Thành phố</option>
                                                 </select>
                                             </div>
                                             <div class="field town">
-                                                <select name="province">
+                                                <select name="district">
                                                     <option>Quận/Huyện</option>
                                                 </select>
                                             </div>

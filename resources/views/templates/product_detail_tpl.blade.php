@@ -28,8 +28,9 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <ul class="list-unstyled">
-                                    <li><a href=""><img src="images/thumb-1.png" alt="" title=""></a></li>
-                                    <li><a href=""><img src="images/thumb-2.png" alt="" title=""></a></li>
+                                    @foreach($album_hinh as $img)
+                                    <li><a href=""><img src="{{asset('upload/hasp/'.$img->photo)}}" alt="" title=""></a></li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="col-md-8">

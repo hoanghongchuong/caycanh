@@ -23,10 +23,8 @@
           
           <form name="frmAdd" method="post" action="{!! route('campaignCreate', ['id' => isset($campaign) ? $campaign->id : '' ]) !!}">
             <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-            
-              
+                          
             <div class="clearfix"></div>
-            
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Tên</label>

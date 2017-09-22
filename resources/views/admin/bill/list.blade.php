@@ -1,9 +1,9 @@
 @extends('admin.master')
 @section('content')
-@section('controller','Danh mục ')
+@section('controller','Orders List')
 @section('action','List')
 <!-- Content Header (Page header) -->
-<!-- <script type="text/javascript">
+<script type="text/javascript">
   $(document).ready(function() {
     $("#chonhet").click(function(){
       var status=this.checked;
@@ -18,10 +18,10 @@
       listid=listid.substr(1);   //alert(listid);
       if (listid=="") { alert("Bạn chưa chọn mục nào"); return false;}
       hoi= confirm("Bạn có chắc chắn muốn xóa?");
-      if (hoi==true) document.location = homeUrl()+"/admin/newscate/"+listid+"/delete_list?type={{@$_GET[type]}}";
+      if (hoi==true) document.location = homeUrl()+"/admin/orders/"+listid+"/delete_list";
     });
   });
-</script> -->
+</script>
 <section class="content-header">
   <h1>
     @yield('controller')
@@ -52,45 +52,40 @@
               <tr>
                 <!-- <th style="width: 20px;"><input type="checkbox" name="chonhet" class="minimal" id="chonhet" /></th> -->
                 <th class="text-center with_dieuhuong">Stt</th>
-                
-                <th>Tên</th>
-                <th>Loại</th>
-                <th>Giá trị</th>
-                <th>Ngày hết hạn</th>
-                <!-- <th class="text-center with_dieuhuong">Hiển thị</th> -->
+                <th>Mã đơn hàng</th>
+                <th>Họ tên</th>
+                <th>Ngày tạo</th>
+                <th>Trạng thái</th>
                 <th class="text-center with_dieuhuong">Sửa</th>
                 <th class="text-center with_dieuhuong">Xóa</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($campaigns as $key=>$item)
+           
+              @foreach($data as $k=>$item)
               <tr>
-                <!-- <td><input type="checkbox" name="chon" id="chon" value="" class="chon" /></td> -->
-                <td>{{$key+1}}</td>
-                <td>{{$item->campaign_name}}</td>
+                <!-- <td><input type="checkbox" name="chon" id="chon" value="{{$item->id}}" class="chon" /></td> -->
+                <td class="text-center with_dieuhuong">{{$k+1}}</td>
+                <td>{{$item->full_name}}</td>
+                <td>{{$item->detail->product_code}}</td>
+                <td>{{ $item->created_at }}</td>
                 <td>
-                    <?php
-                        if($item->campaign_type == 1){
-                          echo "Trừ tiền";
-                        }
-                        
-                        if($item->campaign_type == 2){
-                          echo "Trừ %";
-                        }
-
-                    ?>
-
+                  <!-- <?php  $trangthai = DB::table('order_status')->where('id', $item->status)->first();
+                  ?>
+                    {{ $trangthai->name }} -->
                 </td>
-                <td>{{$item->campaign_value}}</td>
-                <td>{{$item->campaign_expired}}</td>
-                               
-                
-                
+                <!-- <td class="text-center with_dieuhuong">
+                  @if($item->status>0)
+                    <a href="admin/orders/edit?id={{$item->id}}&hienthi={{ time() }}" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Bật</a>
+                  @else
+                    <a href="admin/orders/edit?id={{$item->id}}&hienthi={{ time() }}" class="btn btn-danger btn-xs"><i class="fa fa-eye"></i> Tắt</a>
+                  @endif
+                </td> -->
                 <td class="text-center with_dieuhuong">
-                  <i class="fa fa-pencil fa-fw"></i><a href="admin/campaign/create/{{$item->id}}">Edit</a>
+                  <i class="fa fa-pencil fa-fw"></i><a href="">Edit</a>
                 </td>
                 <td class="text-center">
-                  <i class="fa fa-trash-o fa-fw"></i><a onClick="if(!confirm('Xác nhận xóa')) return false;" href="{{asset('admin/campaign/delete/'.$item->id)}}">Delete</a>
+                  <i class="fa fa-trash-o fa-fw"></i><a onClick="if(!confirm('Xác nhận xóa')) return false;" href="">Delete</a>
                 </td>
               </tr>
               @endforeach
@@ -99,8 +94,8 @@
         </div><!-- /.box-body -->
         <div class="box-footer col-md-12">
           <div class="col-md-6">
-            <input type="button" onclick="javascript:window.location='admin/campaign/create'" value="Thêm" class="btn btn-primary" />
-            <!-- <button type="button" id="xoahet" class="btn btn-success">Xóa</button> -->
+            <!-- <input type="button" onclick="javascript:window.location='admin/orders/add'" value="Thêm" class="btn btn-primary" /> -->
+            <button type="button" id="xoahet" class="btn btn-success">Xóa</button>
             <input type="button" value="Thoát" onclick="javascript:window.location='admin'" class="btn btn-danger" />
 
           </div>
