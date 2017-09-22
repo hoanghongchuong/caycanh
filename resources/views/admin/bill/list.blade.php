@@ -52,28 +52,29 @@
               <tr>
                 <!-- <th style="width: 20px;"><input type="checkbox" name="chonhet" class="minimal" id="chonhet" /></th> -->
                 <th class="text-center with_dieuhuong">Stt</th>
-                <th>Mã đơn hàng</th>
+                
                 <th>Họ tên</th>
-                <th>Ngày tạo</th>
+                <td>Tổng tiền</td>
+                <th>Ngày đặt hàng</th>
                 <th>Trạng thái</th>
                 <th class="text-center with_dieuhuong">Sửa</th>
                 <th class="text-center with_dieuhuong">Xóa</th>
               </tr>
             </thead>
             <tbody>
-           
+            
               @foreach($data as $k=>$item)
               <tr>
+
                 <!-- <td><input type="checkbox" name="chon" id="chon" value="{{$item->id}}" class="chon" /></td> -->
                 <td class="text-center with_dieuhuong">{{$k+1}}</td>
                 <td>{{$item->full_name}}</td>
-                <td>{{$item->detail->product_code}}</td>
+
+                <td>{{ number_format($item->total)}}</td>
+
                 <td>{{ $item->created_at }}</td>
-                <td>
-                  <!-- <?php  $trangthai = DB::table('order_status')->where('id', $item->status)->first();
-                  ?>
-                    {{ $trangthai->name }} -->
-                </td>
+                <td></td>
+                
                 <!-- <td class="text-center with_dieuhuong">
                   @if($item->status>0)
                     <a href="admin/orders/edit?id={{$item->id}}&hienthi={{ time() }}" class="btn btn-primary btn-xs"><i class="fa fa-eye"></i> Bật</a>
@@ -82,10 +83,10 @@
                   @endif
                 </td> -->
                 <td class="text-center with_dieuhuong">
-                  <i class="fa fa-pencil fa-fw"></i><a href="">Edit</a>
+                  <i class="fa fa-pencil fa-fw"></i><a href="">Chi tiết</a>
                 </td>
                 <td class="text-center">
-                  <i class="fa fa-trash-o fa-fw"></i><a onClick="if(!confirm('Xác nhận xóa')) return false;" href="">Delete</a>
+                  <i class="fa fa-trash-o fa-fw"></i><a onClick="if(!confirm('Xác nhận xóa')) return false;" href="{{ asset('admin/orders/delete/'.$item->id )}}">Delete</a>
                 </td>
               </tr>
               @endforeach
@@ -95,7 +96,7 @@
         <div class="box-footer col-md-12">
           <div class="col-md-6">
             <!-- <input type="button" onclick="javascript:window.location='admin/orders/add'" value="Thêm" class="btn btn-primary" /> -->
-            <button type="button" id="xoahet" class="btn btn-success">Xóa</button>
+            <!-- <button type="button" id="xoahet" class="btn btn-success">Xóa</button> -->
             <input type="button" value="Thoát" onclick="javascript:window.location='admin'" class="btn btn-danger" />
 
           </div>

@@ -135,14 +135,14 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 	
 		Route::group(['prefix' => 'orders'], function(){
 		Route::get('/',['as'=>'admin.bill.index','uses'=>'Admin\BillController@getList']);
-		Route::get('add',['as'=>'admin.obill.getAdd','uses'=>'Admin\OBillController@getAdd']);
-		Route::post('postAdd',['as'=>'admin.obill.postAdd','uses'=>'Admin\OBillController@postAdd']);
-		Route::get('edit',['as'=>'admin.obill.getEdit','uses'=>'Admin\OBillController@getEdit']);
+		// Route::get('add',['as'=>'admin.obill.getAdd','uses'=>'Admin\BillController@getAdd']);
+		// Route::post('postAdd',['as'=>'admin.obill.postAdd','uses'=>'Admin\OBillController@postAdd']);
+		
+		Route::get('edit',['as'=>'admin.bill.getEdit','uses'=>'Admin\BillController@getEdit']);
+		Route::post('edit',['as'=>'admin.bill.update','uses'=>'Admin\BillController@update']);
 
-		Route::post('edit',['as'=>'admin.obill.update','uses'=>'Admin\OBillController@update']);
-
-		Route::get('{id}/delete',['as'=>'admin.obill.getDelete','uses'=>'Admin\OBillController@getDelete']);
-		Route::get('{id}/delete_list',['as'=>'admin.obill.getDeleteList','uses'=>'Admin\OBillController@getDeleteList']);
+		Route::get('delete/{id}',['as'=>'admin.bill.getDelete','uses'=>'Admin\BillController@getDelete']);
+		// Route::get('{id}/delete_list',['as'=>'admin.obill.getDeleteList','uses'=>'Admin\OBillController@getDeleteList']);
 	});
 
 	Route::group(['prefix' => 'newscate'], function(){
@@ -154,8 +154,8 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 
 		Route::post('edit',['as'=>'admin.newscate.update','uses'=>'Admin\NewsCateController@update']);
 
-		Route::get('delete/{id}',['as'=>'admin.newscate.getDelete','uses'=>'Admin\NewsCateController@getDelete']);
-		// Route::get('{id}/delete_list',['as'=>'admin.newscate.getDeleteList','uses'=>'Admin\NewsCateController@getDeleteList']);
+		Route::get('{id}/delete',['as'=>'admin.newscate.getDelete','uses'=>'Admin\NewsCateController@getDelete']);
+		Route::get('{id}/delete_list',['as'=>'admin.newscate.getDeleteList','uses'=>'Admin\NewsCateController@getDeleteList']);
 	});
 	// Route::group(['prefix' => 'menu'], function(){
 	// 	Route::get('/',['as'=>'admin.menu.index','uses'=>'Admin\MenuController@getDanhSach']);

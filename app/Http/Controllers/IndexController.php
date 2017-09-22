@@ -455,9 +455,10 @@ class IndexController extends Controller {
 	{
 
 		$product_cart= Cart::content();
-		$product_noibat = DB::table('products')->select()->where('status',1)->where('noibat','>',0)->orderBy('created_at','desc')->take(8)->get();
-				
+		$total = $this->getTotalPrice();
+		// dd($total);
 
+		$product_noibat = DB::table('products')->select()->where('status',1)->where('noibat','>',0)->orderBy('created_at','desc')->take(8)->get();
 		$setting = Cache::get('setting');
 		// Cấu hình SEO
 		$title = "Giỏ hàng";
@@ -536,7 +537,7 @@ class IndexController extends Controller {
     }
 
     public function postOrder(Request $req){
-
+    	$cart = Cart::content();
     	$bill = new Bill;
     	$bill->full_name = $req->full_name;
     	$bill->email = $req->email;
@@ -544,18 +545,19 @@ class IndexController extends Controller {
     	$bill->address = $req->address;
     	$bill->province = $req->province;
     	$bill->district = $req->district;
-
+    	$total = $this->getTotalPrice();
     	// $order = $req->only('full_name', 'email', 'phone', 'address', 'province', 'district');
-    	$order['price'] = $this->getTotalPrice();
+    	// $order['price'] = $this->getTotalPrice();
     	if ($req->card_code) {
     		$price = $this->checkCard($req);
 	    	if (!$price) {
 	    		return redirect()->back()->with('Mã giảm giá không .....');
 	    	}
 	    	$order['price'] = $this->checkCard($req);
+	    	// $bill->total = $total * (100 - $req->card_code) / 100;
     	}
     	$detail = [];
-    	$cart = Cart::content();
+    	
     	
     	foreach ($cart as $key) {
 
@@ -567,7 +569,8 @@ class IndexController extends Controller {
     			'product_code' => $key->options->code
     		];
     	}
-    	$order['detail'] = json_encode($detail);
+    	// $order['detail'] = json_encode($detail);
+    	
     	$bill->detail = json_encode($detail);
     	$bill->save();
     	Cart::destroy();

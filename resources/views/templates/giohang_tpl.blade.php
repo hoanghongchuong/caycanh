@@ -39,10 +39,9 @@
                             <form action="{{route('updateCart')}}" method="post">
                                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                                     <?php $tongtien=0; $stt =1 ?>
+
                                     @foreach($product_cart as $key=>$item)
-                                    <?php
-                                        $tongtien+=$item->price*$item->qty;
-                                    ?>
+                                    
                                     <tbody>
                                         <input type="hidden" name="product_id" value="{{ $item->rowId }}">
                                         <tr>
@@ -74,7 +73,7 @@
                                     <tr>
                                         <th class="text-right" colspan="5">Tạm tính </th>
 
-                                        <td class="grand-total price">$ {{ number_format($tongtien)}}</td>
+                                        <td class="grand-total price">$ {{ number_format($total)}}</td>
                                     </tr>
                                 </tfoot>
                                 
@@ -138,7 +137,7 @@
                                             <tbody>
                                                 <tr>
                                                     <th>Tạm tính</th>
-                                                    <td><span class="price total-price">$ {{number_format($tongtien)}}</span></td>
+                                                    <td><span class="price total-price">$ {{number_format($total)}}</span></td>
                                                 </tr>
                                                 <tr>
                                                     <th>Phí vận chuyển</th>
@@ -146,7 +145,7 @@
                                                 </tr>
                                                 <tr class="total">
                                                     <th>Tổng cộng</th>
-                                                    <td><span class="price total-price">$ {{number_format($tongtien)}}</span></td>
+                                                    <td name="total"><span class="price total-price" name="">$ {{number_format($total)}}</span></td>
                                                 </tr>
                                             </tbody>
                                         </table>
