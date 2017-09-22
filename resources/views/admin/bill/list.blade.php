@@ -62,7 +62,6 @@
               </tr>
             </thead>
             <tbody>
-            
               @foreach($data as $k=>$item)
               <tr>
 
@@ -73,7 +72,32 @@
                 <td>{{ number_format($item->total)}}</td>
 
                 <td>{{ $item->created_at }}</td>
-                <td></td>
+                <td>
+                  <?php
+                      
+                      switch ($item->status) {
+                        case '0':
+                          echo "Mới đặt";
+                          break;
+                        case '1':
+                          echo "Xác nhận";
+                          break;
+                          case '2':
+                          echo "Đang giao hàng";
+                          break;
+                          case '3':
+                          echo "Hoàn thành";
+                          break;
+                          case '4':
+                          echo "Hủy";
+                          break;
+                        default:
+                          echo "Mới đặt";
+                          break;
+                      }
+                  ?>
+                   
+                 </td>
                 
                 <!-- <td class="text-center with_dieuhuong">
                   @if($item->status>0)
@@ -83,7 +107,7 @@
                   @endif
                 </td> -->
                 <td class="text-center with_dieuhuong">
-                  <i class="fa fa-pencil fa-fw"></i><a href="">Chi tiết</a>
+                  <i class="fa fa-pencil fa-fw"></i><a href="{{asset('admin/orders/edit/'.$item->id)}}">Chi tiết</a>
                 </td>
                 <td class="text-center">
                   <i class="fa fa-trash-o fa-fw"></i><a onClick="if(!confirm('Xác nhận xóa')) return false;" href="{{ asset('admin/orders/delete/'.$item->id )}}">Delete</a>

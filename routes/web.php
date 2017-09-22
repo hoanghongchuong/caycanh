@@ -138,8 +138,8 @@ Route::group(['middleware' =>'authen', 'prefix' => 'admin'], function(){
 		// Route::get('add',['as'=>'admin.obill.getAdd','uses'=>'Admin\BillController@getAdd']);
 		// Route::post('postAdd',['as'=>'admin.obill.postAdd','uses'=>'Admin\OBillController@postAdd']);
 		
-		Route::get('edit',['as'=>'admin.bill.getEdit','uses'=>'Admin\BillController@getEdit']);
-		Route::post('edit',['as'=>'admin.bill.update','uses'=>'Admin\BillController@update']);
+		Route::get('edit/{id}',['as'=>'admin.bill.getEdit','uses'=>'Admin\BillController@getEdit']);
+		Route::post('edit/{id}',['as'=>'admin.bill.update','uses'=>'Admin\BillController@update']);
 
 		Route::get('delete/{id}',['as'=>'admin.bill.getDelete','uses'=>'Admin\BillController@getDelete']);
 		// Route::get('{id}/delete_list',['as'=>'admin.obill.getDeleteList','uses'=>'Admin\OBillController@getDeleteList']);

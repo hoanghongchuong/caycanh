@@ -546,19 +546,17 @@ class IndexController extends Controller {
     	$bill->province = $req->province;
     	$bill->district = $req->district;
     	$total = $this->getTotalPrice();
-    	// $order = $req->only('full_name', 'email', 'phone', 'address', 'province', 'district');
     	// $order['price'] = $this->getTotalPrice();
     	if ($req->card_code) {
     		$price = $this->checkCard($req);
 	    	if (!$price) {
-	    		return redirect()->back()->with('Mã giảm giá không .....');
+	    		return redirect()->back()->with('Mã giảm giá không đúng');
 	    	}
 	    	$order['price'] = $this->checkCard($req);
 	    	// $bill->total = $total * (100 - $req->card_code) / 100;
     	}
     	$detail = [];
-    	
-    	
+    	    	
     	foreach ($cart as $key) {
 
     		$detail[] = [

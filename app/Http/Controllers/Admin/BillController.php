@@ -9,22 +9,25 @@ class BillController extends Controller
 {
     public function getList(){
     	$data = Bill::all();
-    	foreach ($data as $bill) {
+    	// foreach ($data as $bill) {
 
-    		// dd($bill->detail);
-
-    		$detail = json_decode($bill->detail);
-    		// dd($detail);
-    		foreach ($detail as $product) {
+    	// 	$detail = json_decode($bill->detail);
+    		
+    	// 	foreach ($detail as $product) {
     			
-    		}
-    	}
+    	// 	}
+    	// }
     	return view('admin.bill.list', compact('data'));
     }
 
     
-    public function getEdit(){
-    	return view('admin.bill.edit');
+    public function getEdit($id){
+        $data = Bill::where('id',$id)->first();
+             
+            $detail = json_decode($data->detail);
+            // dd($detail);
+       
+    	return view('admin.bill.edit',compact('data','detail'));
     }
     public function post(){
 
