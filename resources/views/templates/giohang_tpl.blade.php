@@ -22,9 +22,7 @@
     <div class="main-content">
             <section class="cart-container">
                 <div class="container">
-
                     <h2 class="cart-title">Giỏ hàng</h2>
-                    
                         <table class="table table-wrapper table-responsive text-center">
                             <thead>
                                 <tr>
@@ -66,21 +64,17 @@
                                     </tbody>
                                     <?php $stt++ ?>
                                     @endforeach
-                                
-                                                           
-                                <tfoot>
+                                                          
+                                    <tfoot>
+                                        <tr>
+                                            <th class="text-right" colspan="5">Tạm tính </th>
 
-                                    <tr>
-                                        <th class="text-right" colspan="5">Tạm tính </th>
-
-                                        <td class="grand-total price">$ {{ number_format($total)}}</td>
-                                    </tr>
-                                </tfoot>
-                                
+                                            <td class="grand-total price">$ {{ number_format($total)}}</td>
+                                        </tr>
+                                    </tfoot> 
                             </table>
-                            <div class="pull-right"> <button type="" id="btn-update-cart">Cập nhật</button></div>
-                        
-                    </form>
+                                <div class="pull-right"> <button type="" id="btn-update-cart">Cập nhật</button></div>
+                            </form>
 
                 </div>
             </section>
@@ -126,12 +120,12 @@
 
                             <div class="col-md-6">
                                 <div class="payment-content">
-                                    <div class="discound-code">
+                                    <!-- <div class="discound-code">
                                         <div class="control">
                                             <input type="text" name="card_code" placeholder="Mã giảm giá">
-                                            <button class="btn btn-viewall btn-check-card">Sử dụng</button>
+                                            <button type="button" class="btn btn-viewall btn-check-card">Sử dụng</button>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="cart-total">
                                         <table class="table">
                                             <tbody>
@@ -155,10 +149,12 @@
                         </div>
 
                         <div class="action-toobar">
-                            <div class="primary"><a class="back" href="#">
-                                <i class="fa fa-refresh" aria-hidden="true"></i>
-                                Quay lại
-                            </a></div>
+                            <div class="primary">
+                                <a class="back" href="{{ URL::previous() }}">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    Quay lại
+                                </a>
+                            </div>
                             <div class="secondary float-right">
                                 <button class="btn btn-viewall btn-thanhtoan" type="submit">THANH TOÁN</button>
                             </div>
@@ -172,8 +168,7 @@
 <script>
     window.urlCheckCard = '{{ route("checkCard") }}';
     window.token = '{{ csrf_token() }}';
-    
-    
+        
 </script>
 
 @endsection

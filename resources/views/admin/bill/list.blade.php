@@ -71,7 +71,7 @@
 
                 <td>{{ number_format($item->total)}}</td>
 
-                <td>{{ $item->created_at }}</td>
+                <td>{{ date($item->created_at) }}</td>
                 <td>
                   <?php
                       

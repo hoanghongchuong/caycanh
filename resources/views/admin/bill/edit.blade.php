@@ -21,7 +21,7 @@
     <div class="box">
     	@include('admin.messages_error')
         <div class="box-body">
-        	<form method="post" action="" >
+        	<form method="post" action="{{asset('admin/orders/edit/'.$data->id)}}" >
         		<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
       			<div class="nav-tabs-custom">
 	                <ul class="nav nav-tabs">
@@ -58,7 +58,11 @@
 									<div class="form-group">
 								      	<label for="ten">Tình trạng đơn hàng</label>
 								      	<select name="status" class="form-control">
-								      		<option value=""></option>
+								      		<option value="0" {{ isset($data) && $data->status == 0 ? 'selected=""' : '' }}>Mới đặt</option>
+                							<option value="1" {{ isset($data) && $data->status == 1 ? 'selected=""' : '' }}>Xác nhận</option>
+                							<option value="2" {{ isset($data) && $data->status == 2 ? 'selected=""' : '' }}>Đang giao hàng</option>
+                							<option value="3" {{ isset($data) && $data->status == 3 ? 'selected=""' : '' }}>Hoàn thành</option>
+                							<option value="4" {{ isset($data) && $data->status == 4 ? 'selected=""' : '' }}>Hủy</option>
 								      	</select>
 									</div>
 									
@@ -72,7 +76,7 @@
 					          <table id="example2" class="table table-bordered table-hover">
 					            <thead>
 					              <tr>
-					                <th style="width: 20px;"><input type="checkbox" name="chonhet" class="minimal" id="chonhet" /></th>
+					                <!-- <th style="width: 20px;"><input type="checkbox" name="chonhet" class="minimal" id="chonhet" /></th> -->
 					                <th class="text-center with_dieuhuong">Stt</th>
 					                <th>Tên sản phẩm</th>
 					                <th>Hình ảnh</th>
@@ -84,7 +88,7 @@
 					            <tbody>
 					            @foreach($detail as $key=>$dt)  
 					              <tr>
-					                <td><input type="checkbox" name="chon" id="chon" value="" class="chon" /></td>
+					                <!-- <td><input type="checkbox" name="chon" id="chon" value="" class="chon" /></td> -->
 					                <td class="text-center with_dieuhuong">{{$key+1}}</td>
 					                <td>{{$dt->product_name}}</td>
 					                <td><img src="{{asset('upload/product/'.$dt->product_img)}}" width="100px" height="100px" alt=""></td>
@@ -97,7 +101,8 @@
 					          </table>
 					        </div><!-- /.box-body -->
 					        <div class="form-group">
-					        	<h4>Tổng thành tiền: <b> {{ number_format($data->total) }}VNĐ</b></h4>
+					        
+					        	<h4>Tổng thành tiền: <b> {{ number_format($data->total) }} VNĐ</b></h4>
 					        </div>
 	                    	<div class="clearfix"></div>
 	                	</div><!-- /.tab-pane -->

@@ -339,6 +339,7 @@ class IndexController extends Controller {
 			$banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','bai-viet')->get()->first();
 			$quangcao_tintuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','quang-cao')->get();
 			$tintuc_moinhat_detail = DB::table('news')->select()->where('status',1)->where('com','tin-tuc')->orderby('created_at','desc')->take(6)->get();
+			$tinkhac = DB::table('news')->where('status',1)->where('id','<>',$id)->get();
 			$hot_news = DB::table('news')->where('status',1)->where('noibat',1)->orderBy('created_at','desc')->take(5)->get();
 
 			$baiviet_khac = DB::table('news')->select()->where('status',1)->where('alias','<>',$id)->where('com','tin-tuc')->orderby('created_at','desc')->take(2)->get();
@@ -354,7 +355,7 @@ class IndexController extends Controller {
 			$description = $news_detail->description;
 			$img_share = asset('upload/news/'.$news_detail->photo);
 
-			return view('templates.news_detail_tpl', compact('news_detail','com','tintuc_moinhat_detail','camnhan_khachhang','banner_danhmuc','baiviet_khac','quangcao_tintuc','keyword','description','title','img_share','hot_news'));
+			return view('templates.news_detail_tpl', compact('news_detail','com','tintuc_moinhat_detail','camnhan_khachhang','banner_danhmuc','baiviet_khac','quangcao_tintuc','keyword','description','title','img_share','hot_news','tinkhac'));
 		}else{
 			return redirect()->route('getErrorNotFount');
 		}
@@ -521,9 +522,10 @@ class IndexController extends Controller {
     			$total = $total * (100 - $card->campaign_value) / 100;
     		}
 
+    		// return ($total);
     		return number_format($total);
     	}
-    	return false;
+    	return response()->json(false);
     }
 
     protected function getTotalPrice() 
@@ -546,14 +548,20 @@ class IndexController extends Controller {
     	$bill->province = $req->province;
     	$bill->district = $req->district;
     	$total = $this->getTotalPrice();
+    	$bill->total = $total;
     	// $order['price'] = $this->getTotalPrice();
     	if ($req->card_code) {
     		$price = $this->checkCard($req);
 	    	if (!$price) {
 	    		return redirect()->back()->with('Mã giảm giá không đúng');
 	    	}
-	    	$order['price'] = $this->checkCard($req);
-	    	// $bill->total = $total * (100 - $req->card_code) / 100;
+	    	$bill->card_code = $req->card_code;
+	    	$tongtien = $this->checkCard($req);
+	    	// dd((Int)str_replace(',', '', $tongtien));
+	    	$bill->total = ((Int)str_replace(',', '', $tongtien));
+	    	// dd($bill->total);
+	    	
+	    	
     	}
     	$detail = [];
     	    	

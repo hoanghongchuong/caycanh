@@ -9,28 +9,26 @@ class BillController extends Controller
 {
     public function getList(){
     	$data = Bill::all();
-    	// foreach ($data as $bill) {
-
-    	// 	$detail = json_decode($bill->detail);
-    		
-    	// 	foreach ($detail as $product) {
-    			
-    	// 	}
-    	// }
+    	
     	return view('admin.bill.list', compact('data'));
     }
 
     
     public function getEdit($id){
         $data = Bill::where('id',$id)->first();
-             
-            $detail = json_decode($data->detail);
-            // dd($detail);
-       
+        $detail = json_decode($data->detail);
+        // $sale = Bill::leftJoin('campaign_cards', 'bills.card_code', '=', 'campaign_cards.card_code')
+        //         ->join('campaigns', 'campaign_cards.campaign_id', '=', 'campaigns.id')
+        //         ->select('campaigns.campaign_value')
+        //         ->first();
+        
     	return view('admin.bill.edit',compact('data','detail'));
     }
-    public function post(){
-
+    public function update(Request $req, $id){
+        $data = Bill::where('id',$id)->first();
+        $data->status = $req->status;
+        $data->save();
+        return redirect(route('admin.bill.index'));
     }
 
     public function getDelete($id){

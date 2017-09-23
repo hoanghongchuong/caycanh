@@ -76,9 +76,12 @@ jQuery(function ($) {
             $(this).closest('.header-content').find('.field-search').toggleClass("active");
         });
     });
-
+// chekc cac
     $('.btn-check-card').on('click', function () {
         var code = $('[name=card_code]').val();
+        if (!code) {
+            return alert('Vui lòng nhập mã thẻ');
+        }
         $.ajax({
             url: window.urlCheckCard,
             type: 'POST',
