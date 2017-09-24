@@ -114,9 +114,7 @@
                                             <div class="field town">
                                                 <select name="district" id="district_id">
                                                     <option>Quận/huyện</option>
-                                                    @foreach($district as $dis)
-                                                    <option value="{{$dis->id}}">{{$dis->district_name}}</option>
-                                                    @endforeach
+                                                   
                                                 </select>
                                             </div>
                                         </fieldset>
@@ -174,7 +172,6 @@
 <script>
     window.urlCheckCard = '{{ route("checkCard") }}';
     window.token = '{{ csrf_token() }}';
-    window.urlLoadDistrict = '{{ route("loadDistrictByProvince") }}';
 </script>
 
 @endsection
@@ -184,18 +181,10 @@
            
             $('#province_id').change(function(){
                 var pro_id = $(this).val();
-                $.ajax({
-                    url:  window.urlLoadDistrict,
-                    type: 'GET',
-                    data: {
-                        province_id = pro_id
-                    },
-                    success: function (res){
-                        console.log(res);
-                        if (res) {
-                            $('#district_id').html(res);
-                        }
-                    }
+             
+                $.get("ajax/province/"+pro_id, function(data){
+                    // alert(data);
+                    $('#district_id').html(data);
                 });
             });
         });

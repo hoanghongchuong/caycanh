@@ -593,7 +593,10 @@ class IndexController extends Controller {
 
     public function loadDistrictByProvince($id){
     	$district = District::where('province_id',$id)->get();
-    	
+    	// dd($district);
+    	foreach($district as $item){
+    		echo "<option value='".$item->id."'>".$item->district_name."</option>";
+    	}
     }
 
 }
