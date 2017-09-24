@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('content')
-@section('controller','Bài viết '.'Banner')
+@section('controller','Bài viết '.'Huyện')
 @section('action','Add')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -35,8 +35,11 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Tỉnh/ thành phố</label>
-                  <select name="" id="" class="form-control">
+                  <select name="province" id="" class="form-control">
                     <option value="">--Chọn tỉnh/ thành phố---</option>
+                    @foreach($province as $pro)
+                    <option value="{{$pro->id}}">{{$pro->province_name}}</option>
+                    @endforeach
                   </select>
               </div>
             </div>

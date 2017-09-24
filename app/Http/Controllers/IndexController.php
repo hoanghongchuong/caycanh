@@ -10,6 +10,7 @@ use Cart;
 use App\Campaign;
 use App\Bill;
 use App\CampaignCard;
+use App\District;
 class IndexController extends Controller {
 	protected $setting = NULL;
 	/*
@@ -458,6 +459,8 @@ class IndexController extends Controller {
 		$product_cart= Cart::content();
 		$total = $this->getTotalPrice();
 		// dd($total);
+		$province = DB::table('province')->get();
+		$district = DB::table('district')->get();
 
 		$product_noibat = DB::table('products')->select()->where('status',1)->where('noibat','>',0)->orderBy('created_at','desc')->take(8)->get();
 		$setting = Cache::get('setting');
@@ -467,7 +470,7 @@ class IndexController extends Controller {
 		$description = "Giỏ hàng";
 		$img_share = '';
 		// End cấu hình SEO
-		return view('templates.giohang_tpl', compact('doitac','product_cart','huongdan_muahang','product_noibat','camnhan_khachhang','keyword','description','title','img_share','total'));
+		return view('templates.giohang_tpl', compact('doitac','product_cart','district','product_noibat','province','keyword','description','title','img_share','total'));
 	}
 
 	public function addCart(Request $req)
@@ -586,4 +589,11 @@ class IndexController extends Controller {
 				window.location = '".url('/')."' 
 			</script>";
     }
+
+
+    public function loadDistrictByProvince($id){
+    	$district = District::where('province_id',$id)->get();
+    	
+    }
+
 }

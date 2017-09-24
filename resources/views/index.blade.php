@@ -109,5 +109,6 @@
 
     {{ $setting->codechat }}
     {{ $setting->analytics }}
+    @yield('script')
 </body>
 </html>

@@ -24,8 +24,11 @@ Route::post('newsletter',['as'=>'postNewsletter', 'uses'=>'IndexController@postN
 Route::get('cam-nang/{id}.html',['as'=>'getNewsDetail', 'uses'=>'IndexController@getNewsDetail']);
 Route::get('san-pham',['as'=>'getProduct', 'uses'=>'IndexController@getProduct']);
 Route::get('san-pham/{alias}.html','IndexController@getProductDetail')->name('detailProduct');
-
 Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@getProductList']);
+
+Route::get('ajax/province/{id}',['as'=>'loadDistrictByProvince', 'uses'=>'IndexController@loadDistrictByProvince']);
+
+
 
 // gio hang
 Route::get('gio-hang',['as'=>'getCart', 'uses'=>'IndexController@getCart']);

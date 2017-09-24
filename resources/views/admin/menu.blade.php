@@ -144,7 +144,7 @@
           <ul class="treeview-menu">
             <!-- <li><a href="admin/lienket?type=slider"><i class="fa fa-circle-o"></i>Quản lý slider</a></li> -->
             <li><a href="admin/slider?type=gioi-thieu"><i class="fa fa-circle-o"></i> <span>Quản lý slider</span></a></li>
-            <li><a href="admin/lienket?type=chuyen-muc"><i class="fa fa-circle-o"></i> Banner chuyên mục</a></li>
+            <!-- <li><a href="admin/lienket?type=chuyen-muc"><i class="fa fa-circle-o"></i> Banner chuyên mục</a></li> -->
             <!-- <li><a href="admin/lienket?type=chi-nhanh"><i class="fa fa-circle-o"></i> Quản lý chi nhánh</a></li> -->
           </ul>
         </li>

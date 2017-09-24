@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('content')
-@section('controller','Bài viết ')
+@section('controller','Huyện ')
 @section('action','List')
 <section class="content-header">
   <h1>
@@ -39,7 +39,11 @@
                 
                 <td>{{ $key+1 }}</td>
                 <td>{{$item->district_name}}</td>  
-                <td></td>          
+                <td>
+                  <?php $province = DB::table('province')->where('id',$item->province_id)->first(); ?>
+                  {{$province->province_name}}
+                  
+                </td>          
                 <td class="text-center with_dieuhuong">
                   <i class="fa fa-pencil fa-fw"></i><a href="{{asset('admin/district/edit/'.$item->id)}}">Edit</a>
                 </td>

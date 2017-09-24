@@ -104,13 +104,19 @@
                                                 <input type="text" name="address" required="required" placeholder="Địa chỉ">
                                             </div>
                                             <div class="field country">
-                                                <select name="province">
+                                                <select name="province" id="province_id">
                                                     <option>Tỉnh/Thành phố</option>
+                                                    @foreach($province as $pro)
+                                                    <option value="{{$pro->id}}">{{$pro->province_name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="field town">
-                                                <select name="district">
-                                                    <option>Quận/Huyện</option>
+                                                <select name="district" id="district_id">
+                                                    <option>Quận/huyện</option>
+                                                    @foreach($district as $dis)
+                                                    <option value="{{$dis->id}}">{{$dis->district_name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </fieldset>
@@ -168,7 +174,30 @@
 <script>
     window.urlCheckCard = '{{ route("checkCard") }}';
     window.token = '{{ csrf_token() }}';
-        
+    window.urlLoadDistrict = '{{ route("loadDistrictByProvince") }}';
 </script>
 
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function(){
+           
+            $('#province_id').change(function(){
+                var pro_id = $(this).val();
+                $.ajax({
+                    url:  window.urlLoadDistrict,
+                    type: 'GET',
+                    data: {
+                        province_id = pro_id
+                    },
+                    success: function (res){
+                        console.log(res);
+                        if (res) {
+                            $('#district_id').html(res);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

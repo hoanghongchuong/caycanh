@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('content')
-@section('controller','Bài viết '.'Banner')
+@section('controller','Bài viết '.'Huyện')
 @section('action','Add')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -21,7 +21,7 @@
       @include('admin.messages_error')
         <div class="box-body">
           
-          <form name="frmAdd" method="post" action="{{ route('admin.district.postCreate') }}" >
+          <form name="frmAdd" method="post" action="{{ asset('admin/district/edit/'.$district->id) }}" >
             <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                           
             <div class="clearfix"></div>
@@ -29,14 +29,21 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Tên</label>
-                <input type="text" name="txtName" class="form-control" value="">
+                <input type="text" name="txtName" class="form-control" value="{{$district->district_name}}">
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Tỉnh/ thành phố</label>
-                  <select name="" id="" class="form-control">
-                    <option value="">--Chọn tỉnh/ thành phố---</option>
+                  <select name="province" id="" class="form-control">
+                    @foreach($data as $pro)
+                    
+                    <option @if($pro->id == $district->province_id)
+                      {{"selected"}}
+                      @endif 
+                    value="{{$pro->id}}">{{$pro->province_name}}
+                    </option>
+                    @endforeach
                   </select>
               </div>
             </div>
