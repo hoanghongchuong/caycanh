@@ -71,7 +71,7 @@ class IndexController extends Controller {
 	public function getProduct()
 	{
 		$cate_pro = DB::table('product_categories')->where('status',1)->orderby('id','asc')->get();
-		$product = DB::table('products')->select()->where('status',1)->orderby('stt','desc')->paginate(4);
+		$product = DB::table('products')->select()->where('status',1)->orderby('stt','desc')->paginate(8);
 		// dd($product_cate);
 		// $banner_danhmuc = DB::table('lienket')->select()->where('status',1)->where('com','chuyen-muc')->where('link','san-pham')->get()->first();
 		// $camnhan_khachhang = DB::table('lienket')->select()->where('status',1)->where('com','cam-nhan')->orderby('stt','asc')->get();

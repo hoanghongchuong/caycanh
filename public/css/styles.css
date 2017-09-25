@@ -143,6 +143,48 @@ iframe{
     color: #fff;
     border: none;
 }
+.paginations{
+    text-align: center;
+}
+.pagination{
+    /*text-align: center;*/
+    display: inline-block;
+}
+.pagination li{
+    display: inline-block;
+
+}
+.pagination li span, .pagination li a{
+    font-size: 18px;
+    font-weight: 300;
+    color: #000;
+    border: 0;
+    background: transparent;
+    border-radius: 50%;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+}
+.pagination li.active span, .pagination li a:hover{
+    background: #dc9916 !important;
+    color: #fff !important;
+}
+.pagination li.disabled span{
+    color: #dc9916;
+}
+.pagination li:last-child a{
+    color: #dc9916 !important;
+    /*font-size: 22px;*/
+    font-weight: normal;
+}
+.pagination li:last-child a:hover{
+    background: none !important;
+    color: #dc9916 !important;
+}
 /*-----------------style---------------*/
 
 /*Header*/
