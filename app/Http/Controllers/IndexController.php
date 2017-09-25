@@ -493,9 +493,12 @@ class IndexController extends Controller {
 
 	public function updateCart(Request $req){
 		$data = $req->numb;
-		foreach($data as $key=>$item){
-			Cart::update($key, $item);
-		}		
+		if($data>0){
+			foreach($data as $key=>$item){
+				Cart::update($key, $item);
+			}
+		}
+				
 		return redirect(route('getCart'));
 	}
 

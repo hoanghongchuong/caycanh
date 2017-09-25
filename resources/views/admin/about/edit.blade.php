@@ -33,7 +33,7 @@
 	                <div class="tab-content">
 	                  	<div class="tab-pane active" id="tab_1">
 	                  		<div class="row">
-		                  		<div class="col-md-6 col-xs-12">
+		                  		<!-- <div class="col-md-6 col-xs-12">
 		                  			
 							    	<div class="form-group">
 								      	<label for="ten">Tên</label>
@@ -41,7 +41,7 @@
 									</div>
 									
 									<input type="hidden" name="txtCom" value="{{ old('txtCom', isset($data) ? @$data->com : null) }}">
-								</div>
+								</div> -->
 
 								<div class="clearfix"></div>
 							
