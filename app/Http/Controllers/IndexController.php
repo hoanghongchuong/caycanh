@@ -602,4 +602,51 @@ class IndexController extends Controller {
     	}
     }
 
+    public function ajaxlist(){
+    	$cate = DB::table('product_categories')->get();
+    	return view('templates.ajaxlist', compact('cate'));
+    }
+    public function ajaxListProduct(){
+    	$product = Products::all();
+    	if($product){
+    		echo '<table border="1" cellspacing="0" cellpadding="10">';
+			    echo '<tr>';
+			       echo '<td>';
+			           echo 'Tên sản phẩm';
+			       echo '</td>';
+			       echo '<td>';
+			            echo 'Giá';
+			       echo '</td>';
+			    echo '<tr>';
+			    foreach($product as $item){
+			    	echo '<tr>';
+			            echo '<td>';
+			                echo $item->name;
+			            echo '</td>';
+			            echo '<td>';
+			                echo number_format($item->price);
+			            echo '</td>';
+			        echo '<tr>';
+	    		}
+	    	echo'</table>';
+    	}
+    }
+
+    public function getProductByCate(Request $request){
+    	$cateId = $request->cateProduct;
+    	// dd($cateId);
+    	$product = Products::where('cate_id',$cateId)->get();
+    	if($product){
+    		foreach($product as $item){
+    			echo"<div class='col-md-4'>";
+					echo"<a href='".url('san-pham/'.$item->alias.'.html')."'>";
+						echo"<img src='".asset('upload/product/'.$item->photo)."'>";
+						echo"<p>".number_format($item->price)."</p>";
+						echo"<p>".$item->name."</p>";
+					echo"</a>";
+				echo"</div>";
+    		}
+    	}
+    }
+
 }

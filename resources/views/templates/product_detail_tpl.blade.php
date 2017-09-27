@@ -50,7 +50,7 @@
                         <form action="{{ route('addProductToCart') }}" method="post">
                             {!! csrf_field() !!}
                             <input type="hidden" name="product_id" value="{{ $product_detail->id }}">
-                            <!-- lần sau chú nhớ đặt tên biến lại nhé, $productDetail-->
+                            
                             <div class="actions">
                                 <div class="action-number">
                                     <span class="fa fa-minus minus" aria-hidden="true"></span>

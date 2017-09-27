@@ -20,10 +20,6 @@
                 @foreach($cate_pro as $cate)
                   <li><a href="{{url('san-pham/'.$cate->alias)}}" class="">{{$cate->name}}</a></li>
                 @endforeach
-                  <!-- <li><a href="#">Xương rồng</a></li>
-                  <li><a href="#">Cây thủy sinh</a></li>
-                  <li><a href="#">Cây để bàn</a></li>
-                  <li><a href="#">Cây treo</a></li> -->
               </ul>
               <div class="row tab-content">
                 @foreach($product as $item)

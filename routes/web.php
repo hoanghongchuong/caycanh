@@ -28,6 +28,9 @@ Route::get('san-pham/{id}',['as'=>'getProductList', 'uses'=>'IndexController@get
 
 Route::get('ajax/province/{id}',['as'=>'loadDistrictByProvince', 'uses'=>'IndexController@loadDistrictByProvince']);
 
+Route::get('ajax/list',['as'=>'ajaxlist','uses'=>'IndexController@ajaxlist']);
+Route::get('ajax-list',['as'=>'ajaxListProduct','uses'=>'IndexController@ajaxListProduct']);
+Route::get('ajax/product/{id}',['as' =>'ajaxProductCate', 'uses'=>'IndexController@getProductByCate']);
 
 
 // gio hang
