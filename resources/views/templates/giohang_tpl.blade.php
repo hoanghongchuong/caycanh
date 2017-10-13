@@ -124,12 +124,13 @@
 
                             <div class="col-md-6">
                                 <div class="payment-content">
-                                    <!-- <div class="discound-code">
+                                    <div class="discound-code">
                                         <div class="control">
                                             <input type="text" name="card_code" placeholder="Mã giảm giá">
                                             <button type="button" class="btn btn-viewall btn-check-card">Sử dụng</button>
                                         </div>
-                                    </div> -->
+                                    </div>
+                                    </div>
                                     <div class="cart-total">
                                         <table class="table">
                                             <tbody>
@@ -170,9 +171,9 @@
 </div>
 
 <script>
-    window.urlCheckCard = '{{ route("checkCard") }}';
-    window.token = '{{ csrf_token() }}';
-</script>
+	window.urlCheckCard = '{{ route("checkCard") }}';
+	window.token = '{{ csrf_token() }}';
+</script>	
 
 @endsection
 @section('script')
